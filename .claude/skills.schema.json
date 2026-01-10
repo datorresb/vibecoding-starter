@@ -1,0 +1,93 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "skills.schema.json",
+    "title": "Skills Registry",
+    "description": "Registry of installed agent skills (v1.1.0)",
+    "type": "object",
+    "required": [
+        "version",
+        "skills"
+    ],
+    "properties": {
+        "version": {
+            "type": "string",
+            "description": "Registry format version (semver)"
+        },
+        "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+        },
+        "locations": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Scanned skill locations (.claude, .github)"
+        },
+        "skills": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "path"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+                        "description": "Unique identifier (lowercase, hyphens)"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Human-readable display name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "maxLength": 300,
+                        "description": "What it does + when to use it"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "core",
+                            "engineering",
+                            "devops",
+                            "documentation",
+                            "research"
+                        ],
+                        "description": "Skill category"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Searchable tags"
+                    },
+                    "triggers": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Phrases that activate this skill"
+                    },
+                    "path": {
+                        "type": "string",
+                        "description": "Relative path to SKILL.md"
+                    },
+                    "dependencies": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Other skill IDs this depends on"
+                    }
+                }
+            }
+        }
+    }
+}

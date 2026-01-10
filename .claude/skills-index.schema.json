@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "skills-index.schema.json",
+    "title": "Skills Index (LLM-optimized)",
+    "description": "Compact skills index optimized for LLM context efficiency",
+    "type": "object",
+    "required": [
+        "v",
+        "n",
+        "skills"
+    ],
+    "properties": {
+        "v": {
+            "type": "string",
+            "description": "Version (short key for compactness)"
+        },
+        "n": {
+            "type": "integer",
+            "description": "Total skill count"
+        },
+        "skills": {
+            "type": "object",
+            "description": "Skills grouped by category",
+            "additionalProperties": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": [
+                        "id",
+                        "desc",
+                        "path"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "Skill identifier"
+                        },
+                        "desc": {
+                            "type": "string",
+                            "maxLength": 120,
+                            "description": "Truncated description"
+                        },
+                        "path": {
+                            "type": "string",
+                            "description": "Short path (location/category/skill)"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

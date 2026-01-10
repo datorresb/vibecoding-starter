@@ -1,0 +1,53 @@
+{
+  "v": "1.1.0",
+  "n": 35,
+  "skills": {
+    "core": [
+      {"id":"agent-runbook","desc":"Create step-by-step executable runbooks for AI agents. Use when building automation scripts, setup guides, or multi-step","path":".claude/skills/core/agent-runbook/SKILL.md"},
+      {"id":"backlog-workflow","desc":"Project-agnostic workflow guidance for Backlog.md MCP task management. Covers search-first protocol, scope assessment, t","path":".claude/skills/core/backlog-workflow/SKILL.md"},
+      {"id":"bd","desc":"Backlog management with the bd (beads) utility for issue tracking. Use when creating issues, claiming work, updating tas","path":".claude/skills/core/bd/SKILL.md"},
+      {"id":"brainstorming","desc":"Collaborative ideation-to-spec refinement via one-question-at-a-time dialogue. Use before implementing new features, cha","path":".claude/skills/core/brainstorming/SKILL.md"},
+      {"id":"code-review","desc":"Systematic code review guidance covering correctness, maintainability, security, and performance. Activates for PR revie","path":".claude/skills/core/code-review/SKILL.md"},
+      {"id":"creating-skills","desc":"How to create new Agent Skills following the open standard. Use when authoring new skills, extending agent capabilities,","path":".claude/skills/core/creating-skills/SKILL.md"},
+      {"id":"documentation-writing","desc":"Audience-first documentation guidance for READMEs, API docs, architecture docs, and tutorials. Ensures clarity, complete","path":".claude/skills/core/documentation-writing/SKILL.md"},
+      {"id":"git","desc":"Git hygiene for multi-agent collaborative work. Use when performing version control operations, syncing with remote, com","path":".claude/skills/core/git/SKILL.md"},
+      {"id":"git-hygiene","desc":"Project-agnostic skill for git commit hygiene, linking tasks to commits, and maintaining clean repository state.","path":".claude/skills/core/git-hygiene/SKILL.md"},
+      {"id":"registry-manager","desc":"Maintain the skills registry by scanning installed skills and updating skills.json. Use when adding, removing, or auditi","path":".claude/skills/core/registry-manager/SKILL.md"},
+      {"id":"session-continuation","desc":"Project-agnostic guidance for continuing work across Claude sessions. Ensures context recovery, task resumption, and sta","path":".claude/skills/core/session-continuation/SKILL.md"},
+      {"id":"subagent","desc":"Execution skill for delegated tasks. Use this skill when you are a subagent that has been delegated a task by the tech l","path":".claude/skills/core/subagent/SKILL.md"},
+      {"id":"task-delegation","desc":"Project-agnostic skill for delegating execution work to subagents with skill activation, parallel execution, and quality","path":".claude/skills/core/task-delegation/SKILL.md"},
+      {"id":"task-design","desc":"Design well-structured tasks for AI agents. Use when creating issues, work items, or task specifications that agents wil","path":".claude/skills/core/task-design/SKILL.md"},
+      {"id":"technical-lead-role","desc":"Defines the technical lead role for main thread in agentic coding workflows - planning, delegation, coordination, and qu","path":".claude/skills/core/technical-lead-role/SKILL.md"},
+      {"id":"testing-strategy","desc":"Comprehensive testing guidance covering test planning, TDD workflow, testing pyramid, and coverage targets. Ensures conf","path":".claude/skills/core/testing-strategy/SKILL.md"}
+    ],
+    "engineering": [
+      {"id":"architecture-review","desc":"Systematic evaluation of software architecture across scalability, maintainability, security, performance, reliability, ","path":".claude/skills/engineering/architecture-review/SKILL.md"},
+      {"id":"performance-optimization","desc":"Systematic approach to identifying and resolving performance bottlenecks in software systems. Use when application respo","path":".claude/skills/engineering/performance-optimization/SKILL.md"},
+      {"id":"refactoring","desc":"Safe refactoring patterns for improving code structure without changing behavior. Use when simplifying code, eliminating","path":".claude/skills/engineering/refactoring/SKILL.md"},
+      {"id":"tdd","desc":"Test-Driven Development methodology for writing tests before code. Use when developing new features, fixing bugs with te","path":".claude/skills/engineering/tdd/SKILL.md"}
+    ],
+    "devops": [
+      {"id":"ci-cd","desc":"Continuous Integration and Continuous Deployment best practices. Use when setting up automated build pipelines, test aut","path":".claude/skills/devops/ci-cd/SKILL.md"},
+      {"id":"deployment","desc":"Safe, repeatable deployment strategies for applications across environments. Use when setting up deployment pipelines, d","path":".claude/skills/devops/deployment/SKILL.md"},
+      {"id":"devcontainer-setup","desc":"Standardized DevContainer setup for Python3.13 development environments. Use when initializing a new project, adding Dev","path":".claude/skills/devops/devcontainer-setup/SKILL.md"},
+      {"id":"infrastructure","desc":"Infrastructure as Code (IaC) practices for provisioning and managing cloud resources. Use when provisioning cloud resour","path":".claude/skills/devops/infrastructure/SKILL.md"},
+      {"id":"monitoring","desc":"Comprehensive observability strategy including metrics, logs, traces, and alerting. Use when setting up new applications","path":".claude/skills/devops/monitoring/SKILL.md"}
+    ],
+    "documentation": [
+      {"id":"adr","desc":"Architecture Decision Records (ADR) for documenting significant architectural decisions with context, rationale, and con","path":".claude/skills/documentation/adr/SKILL.md"},
+      {"id":"api-documentation","desc":"Comprehensive guidance for documenting REST, GraphQL, gRPC, and WebSocket APIs. Use when creating API endpoints, updatin","path":".claude/skills/documentation/api-documentation/SKILL.md"},
+      {"id":"technical-writing","desc":"Technical documentation best practices for clear, accurate, and useful documentation. Use when writing documentation, RE","path":".claude/skills/documentation/technical-writing/SKILL.md"}
+    ],
+    "research": [
+      {"id":"evaluation","desc":"Systematic evaluation and comparison of technologies, tools, frameworks, and approaches using weighted criteria and scor","path":".claude/skills/research/evaluation/SKILL.md"},
+      {"id":"proof-of-concept","desc":"Rapid validation of technical feasibility and approach before full implementation. Use when evaluating new technologies,","path":".claude/skills/research/proof-of-concept/SKILL.md"},
+      {"id":"technical-research","desc":"Systematic technical research methodology for evaluating technologies, libraries, and approaches. Use when researching n","path":".claude/skills/research/technical-research/SKILL.md"}
+    ],
+    "assimilation": [
+      {"id":"orchestrator","desc":"Coordinate all assimilation phases to scan a repo and generate skills. Use when assimilating a repository, running the f","path":".claude/skills/assimilation/orchestrator/SKILL.md"},
+      {"id":"pattern-extractor","desc":"Extract coding patterns and conventions from repository source code. Use when analyzing codebase patterns, identifying a","path":".claude/skills/assimilation/pattern-extractor/SKILL.md"},
+      {"id":"repo-scanner","desc":"Deep scan repository structure to extract metadata, detect frameworks, and identify domain boundaries. Use when starting","path":".claude/skills/assimilation/repo-scanner/SKILL.md"},
+      {"id":"skill-generator","desc":"Transform extracted patterns into SKILL.md files following agentskills.io spec. Use when generating skills from patterns","path":".claude/skills/assimilation/skill-generator/SKILL.md"}
+    ]
+  }
+}

@@ -1,0 +1,691 @@
+{
+  "version": "1.1.0",
+  "updated_at": "2026-01-26T04:55:07.613Z",
+  "locations": [
+    ".claude"
+  ],
+  "skills": [
+    {
+      "id": "agent-runbook",
+      "name": "Agent Runbook",
+      "description": "Create step-by-step executable runbooks for AI agents. Use when building automation scripts, setup guides, or multi-step workflows that agents can execute autonomously.",
+      "category": "core",
+      "tags": [
+        "agent-runbook",
+        "create",
+        "step-by-step",
+        "executable",
+        "runbooks",
+        "agents"
+      ],
+      "triggers": [
+        "creating setupinstallation guides agents",
+        "automating multi-step workflows",
+        "building onboarding scripts",
+        "documenting repeatable processes",
+        "creating self-service automation"
+      ],
+      "path": ".claude/skills/core/agent-runbook/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "backlog-workflow",
+      "name": "Backlog Workflow",
+      "description": "Project-agnostic workflow guidance for Backlog.md MCP task management. Covers search-first protocol, scope assessment, task creation standards, lifecycle management, and cross-session coordination.",
+      "category": "core",
+      "tags": [
+        "backlog-workflow",
+        "project-agnostic",
+        "workflow",
+        "guidance",
+        "backlog",
+        "task"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/backlog-workflow/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "bd",
+      "name": "Bd",
+      "description": "Backlog management with the bd (beads) utility for issue tracking. Use when creating issues, claiming work, updating task status, closing completed work, or syncing the backlog with git.",
+      "category": "core",
+      "tags": [
+        "bd",
+        "backlog",
+        "management",
+        "beads",
+        "utility",
+        "issue"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/bd/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "brainstorming",
+      "name": "Brainstorming",
+      "description": "Collaborative ideation-to-spec refinement via one-question-at-a-time dialogue. Use before implementing new features, changing behavior, or starting complex refactors. Always produces a design document.",
+      "category": "core",
+      "tags": [
+        "brainstorming",
+        "collaborative",
+        "ideation-to-spec",
+        "refinement",
+        "one-question-at-a-time",
+        "dialogue"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/brainstorming/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "code-review",
+      "name": "Code Review",
+      "description": "Systematic code review guidance covering correctness, maintainability, security, and performance. Activates for PR reviews and code quality checks.",
+      "category": "core",
+      "tags": [
+        "code-review",
+        "systematic",
+        "code",
+        "review",
+        "guidance",
+        "covering"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/code-review/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "creating-skills",
+      "name": "Creating Skills",
+      "description": "How to create new Agent Skills following the open standard. Use when authoring new skills, extending agent capabilities, or packaging specialized knowledge into reusable formats.",
+      "category": "core",
+      "tags": [
+        "creating-skills",
+        "create",
+        "agent",
+        "skills",
+        "following",
+        "open"
+      ],
+      "triggers": [
+        "trigger condition 1",
+        "trigger condition 2"
+      ],
+      "path": ".claude/skills/core/creating-skills/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "documentation-writing",
+      "name": "Documentation Writing",
+      "description": "Audience-first documentation guidance for READMEs, API docs, architecture docs, and tutorials. Ensures clarity, completeness, and maintainability.",
+      "category": "core",
+      "tags": [
+        "documentation-writing",
+        "audience-first",
+        "documentation",
+        "guidance",
+        "readmes",
+        "docs"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/documentation-writing/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "description": "Git hygiene for multi-agent collaborative work. Use when performing version control operations, syncing with remote, committing changes, or ensuring work is properly shared with the team.",
+      "category": "core",
+      "tags": [
+        "git",
+        "hygiene",
+        "multi-agent",
+        "collaborative",
+        "work",
+        "performing"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/git/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "git-hygiene",
+      "name": "Git Hygiene",
+      "description": "Project-agnostic skill for git commit hygiene, linking tasks to commits, and maintaining clean repository state.",
+      "category": "core",
+      "tags": [
+        "git-hygiene",
+        "project-agnostic",
+        "skill",
+        "commit",
+        "hygiene",
+        "linking"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/git-hygiene/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "registry-manager",
+      "name": "Registry Manager",
+      "description": "Maintain the skills registry by scanning installed skills and updating skills.json. Use when adding, removing, or auditing skills.",
+      "category": "core",
+      "tags": [
+        "registry-manager",
+        "maintain",
+        "skills",
+        "registry",
+        "scanning",
+        "installed"
+      ],
+      "triggers": [
+        "after installing new skills",
+        "after removing skills",
+        "audit what skills are available",
+        "registry files are missing or outdated",
+        "during project setup"
+      ],
+      "path": ".claude/skills/core/registry-manager/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "session-continuation",
+      "name": "Session Continuation",
+      "description": "Project-agnostic guidance for continuing work across Claude sessions. Ensures context recovery, task resumption, and state reconciliation.",
+      "category": "core",
+      "tags": [
+        "session-continuation",
+        "project-agnostic",
+        "guidance",
+        "continuing",
+        "work",
+        "across"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/session-continuation/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "subagent",
+      "name": "Subagent",
+      "description": "Execution skill for delegated tasks. Use this skill when you are a subagent that has been delegated a task by the tech lead. You must be diligent, hygienic, and deliver work that is \"done\" and \"stable\" according to the specification.",
+      "category": "core",
+      "tags": [
+        "subagent",
+        "execution",
+        "skill",
+        "delegated",
+        "tasks",
+        "subagent"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/subagent/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "task-delegation",
+      "name": "Task Delegation",
+      "description": "Project-agnostic skill for delegating execution work to subagents with skill activation, parallel execution, and quality verification.",
+      "category": "core",
+      "tags": [
+        "task-delegation",
+        "project-agnostic",
+        "skill",
+        "delegating",
+        "execution",
+        "work"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/task-delegation/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "task-design",
+      "name": "Task Design",
+      "description": "Design well-structured tasks for AI agents. Use when creating issues, work items, or task specifications that agents will execute autonomously.",
+      "category": "core",
+      "tags": [
+        "task-design",
+        "design",
+        "well-structured",
+        "tasks",
+        "agents",
+        "creating"
+      ],
+      "triggers": [
+        "creating issuestasks eg bd beads",
+        "writing github issues autonomous agents",
+        "specifying work subagents",
+        "breaking down features inactionable tasks"
+      ],
+      "path": ".claude/skills/core/task-design/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "technical-lead-role",
+      "name": "Technical Lead Role",
+      "description": "Defines the technical lead role for main thread in agentic coding workflows - planning, delegation, coordination, and quality oversight",
+      "category": "core",
+      "tags": [
+        "technical-lead-role",
+        "defines",
+        "technical",
+        "lead",
+        "role",
+        "main"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/core/technical-lead-role/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "testing-strategy",
+      "name": "Testing Strategy",
+      "description": "Comprehensive testing guidance covering test planning, TDD workflow, testing pyramid, and coverage targets. Ensures confidence through layered testing.",
+      "category": "core",
+      "tags": [
+        "testing-strategy",
+        "comprehensive",
+        "testing",
+        "guidance",
+        "covering",
+        "test"
+      ],
+      "triggers": [
+        "complex business logic",
+        "bug fixes write failing test then fix",
+        "api design tests define the interface",
+        "spikeexploratory work unknown requirements",
+        "trivial code getterssetters"
+      ],
+      "path": ".claude/skills/core/testing-strategy/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "architecture-review",
+      "name": "Architecture Review",
+      "description": "Systematic evaluation of software architecture across scalability, maintainability, security, performance, reliability, and cost dimensions. Use when designing systems, reviewing technical approaches, evaluating patterns, making architectural decisions, or assessing technical debt.",
+      "category": "engineering",
+      "tags": [
+        "architecture-review",
+        "systematic",
+        "evaluation",
+        "software",
+        "architecture",
+        "across"
+      ],
+      "triggers": [
+        "designing new systems or major features",
+        "assessing technical debt and planning refactoring",
+        "making technology or pattern selection decisions",
+        "preparing significant scaling events",
+        "onboarding understand an existing systems design"
+      ],
+      "path": ".claude/skills/engineering/architecture-review/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "performance-optimization",
+      "name": "Performance Optimization",
+      "description": "Systematic approach to identifying and resolving performance bottlenecks in software systems. Use when application response times exceed SLAs, resource usage is high, before scaling infrastructure, during performance testing, or when users report slowness.",
+      "category": "engineering",
+      "tags": [
+        "performance-optimization",
+        "systematic",
+        "approach",
+        "identifying",
+        "resolving",
+        "performance"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/engineering/performance-optimization/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "refactoring",
+      "name": "Refactoring",
+      "description": "Safe refactoring patterns for improving code structure without changing behavior. Use when simplifying code, eliminating duplication, improving readability, or restructuring for maintainability.",
+      "category": "engineering",
+      "tags": [
+        "refactoring",
+        "safe",
+        "refactoring",
+        "patterns",
+        "improving",
+        "code"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/engineering/refactoring/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "tdd",
+      "name": "Tdd",
+      "description": "Test-Driven Development methodology for writing tests before code. Use when developing new features, fixing bugs with test cases, or ensuring high code quality through test-first approach.",
+      "category": "engineering",
+      "tags": [
+        "tdd",
+        "test-driven",
+        "development",
+        "methodology",
+        "writing",
+        "tests"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/engineering/tdd/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "ci-cd",
+      "name": "Ci Cd",
+      "description": "Continuous Integration and Continuous Deployment best practices. Use when setting up automated build pipelines, test automation, deployment workflows, or improving release processes.",
+      "category": "devops",
+      "tags": [
+        "ci-cd",
+        "continuous",
+        "integration",
+        "deployment",
+        "best",
+        "practices"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/devops/ci-cd/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "deployment",
+      "name": "Deployment",
+      "description": "Safe, repeatable deployment strategies for applications across environments. Use when setting up deployment pipelines, deploying to production, planning deployment strategies, implementing rollback procedures, or zero-downtime deployments.",
+      "category": "devops",
+      "tags": [
+        "deployment",
+        "safe",
+        "repeatable",
+        "deployment",
+        "strategies",
+        "applications"
+      ],
+      "triggers": [
+        "setting up deployment pipelines new applications",
+        "deploying changes production environments",
+        "planning deployment strategies complex systems",
+        "implementing zero-downtime deployment patterns",
+        "creating rollback procedures"
+      ],
+      "path": ".claude/skills/devops/deployment/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "devcontainer-setup",
+      "name": "Devcontainer Setup",
+      "description": "Standardized DevContainer setup for Python3.13 development environments. Use when initializing a new project, adding DevContainer support, or standardizing tool versions across a team.",
+      "category": "devops",
+      "tags": [
+        "devcontainer-setup",
+        "standardized",
+        "devcontainer",
+        "setup",
+        "python3",
+        "development"
+      ],
+      "triggers": [
+        "initializing a new project from scratch",
+        "adding devcontainer support an existing project"
+      ],
+      "path": ".claude/skills/devops/devcontainer-setup/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infrastructure",
+      "description": "Infrastructure as Code (IaC) practices for provisioning and managing cloud resources. Use when provisioning cloud resources, managing infrastructure changes, setting up environments, disaster recovery planning, or infrastructure audits.",
+      "category": "devops",
+      "tags": [
+        "infrastructure",
+        "infrastructure",
+        "code",
+        "practices",
+        "provisioning",
+        "managing"
+      ],
+      "triggers": [
+        "migrating infrastructure between cloud providers",
+        "scaling infrastructure meet demand",
+        "implementing security and compliance requirements"
+      ],
+      "path": ".claude/skills/devops/infrastructure/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "monitoring",
+      "name": "Monitoring",
+      "description": "Comprehensive observability strategy including metrics, logs, traces, and alerting. Use when setting up new applications, debugging production issues, performance optimization, SLA/SLO definition, incident response, or establishing monitoring infrastructure.",
+      "category": "devops",
+      "tags": [
+        "monitoring",
+        "comprehensive",
+        "observability",
+        "strategy",
+        "including",
+        "metrics"
+      ],
+      "triggers": [
+        "debugging production issues or incidents",
+        "performing performance optimization",
+        "defining slas slos and error budgets",
+        "responding incidents",
+        "establishing alerting strategies"
+      ],
+      "path": ".claude/skills/devops/monitoring/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "adr",
+      "name": "Adr",
+      "description": "Architecture Decision Records (ADR) for documenting significant architectural decisions with context, rationale, and consequences. Use when making technology choices, defining system boundaries, establishing patterns, after architecture reviews, or documenting trade-offs.",
+      "category": "documentation",
+      "tags": [
+        "adr",
+        "architecture",
+        "decision",
+        "records",
+        "documenting",
+        "significant"
+      ],
+      "triggers": [
+        "making significant architectural decisions",
+        "choosing technologies frameworks or libraries",
+        "establishing architectural patterns or standards",
+        "making security or compliance decisions",
+        "after architecture review sessions"
+      ],
+      "path": ".claude/skills/documentation/adr/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "api-documentation",
+      "name": "Api Documentation",
+      "description": "Comprehensive guidance for documenting REST, GraphQL, gRPC, and WebSocket APIs. Use when creating API endpoints, updating existing APIs, preparing public API releases, or documenting external integrations.",
+      "category": "documentation",
+      "tags": [
+        "api-documentation",
+        "comprehensive",
+        "guidance",
+        "documenting",
+        "rest",
+        "graphql"
+      ],
+      "triggers": [
+        "creating new api endpoints or services",
+        "updating existing api interfaces",
+        "preparing apis public release",
+        "enabling external teams integrate with your api",
+        "versioning or deprecating api endpoints"
+      ],
+      "path": ".claude/skills/documentation/api-documentation/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "technical-writing",
+      "name": "Technical Writing",
+      "description": "Technical documentation best practices for clear, accurate, and useful documentation. Use when writing documentation, README files, API docs, architecture guides, or any technical communication.",
+      "category": "documentation",
+      "tags": [
+        "technical-writing",
+        "technical",
+        "documentation",
+        "best",
+        "practices",
+        "clear"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/documentation/technical-writing/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "evaluation",
+      "name": "Evaluation",
+      "description": "Systematic evaluation and comparison of technologies, tools, frameworks, and approaches using weighted criteria and scoring matrices. Use when choosing between multiple technologies, vendor/tool selection, framework comparison, library selection, or architecture pattern selection.",
+      "category": "research",
+      "tags": [
+        "evaluation",
+        "systematic",
+        "evaluation",
+        "comparison",
+        "technologies",
+        "tools"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/research/evaluation/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "proof-of-concept",
+      "name": "Proof Of Concept",
+      "description": "Rapid validation of technical feasibility and approach before full implementation. Use when evaluating new technologies, validating approaches, testing integrations, or demonstrating feasibility to stakeholders.",
+      "category": "research",
+      "tags": [
+        "proof-of-concept",
+        "rapid",
+        "validation",
+        "technical",
+        "feasibility",
+        "approach"
+      ],
+      "triggers": [
+        "evaluating new technologies or frameworks",
+        "validating technical approaches before committing",
+        "making architectural decisions with unknowns",
+        "testing third-party integrations",
+        "demonstrating feasibility stakeholders"
+      ],
+      "path": ".claude/skills/research/proof-of-concept/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "technical-research",
+      "name": "Technical Research",
+      "description": "Systematic technical research methodology for evaluating technologies, libraries, and approaches. Use when researching new technologies, comparing alternatives, or making technical decisions.",
+      "category": "research",
+      "tags": [
+        "technical-research",
+        "systematic",
+        "technical",
+        "research",
+        "methodology",
+        "evaluating"
+      ],
+      "triggers": [],
+      "path": ".claude/skills/research/technical-research/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "orchestrator",
+      "name": "Orchestrator",
+      "description": "Coordinate all assimilation phases to scan a repo and generate skills. Use when assimilating a repository, running the full pipeline, or automating skill extraction.",
+      "category": "assimilation",
+      "tags": [
+        "orchestrator",
+        "coordinate",
+        "assimilation",
+        "phases",
+        "scan",
+        "repo"
+      ],
+      "triggers": [
+        "assimilating a complete repository",
+        "running the full scan  extract  generate pipeline",
+        "automating skill extraction from a codebase",
+        "user says assimilate this repo"
+      ],
+      "path": ".claude/skills/assimilation/orchestrator/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "pattern-extractor",
+      "name": "Pattern Extractor",
+      "description": "Extract coding patterns and conventions from repository source code. Use when analyzing codebase patterns, identifying architectural decisions, or preparing for skill generation.",
+      "category": "assimilation",
+      "tags": [
+        "pattern-extractor",
+        "extract",
+        "coding",
+        "patterns",
+        "conventions",
+        "repository"
+      ],
+      "triggers": [
+        "analyzing a scanned repository patterns",
+        "identifying architectural decisions in code",
+        "extracting conventions skill generation"
+      ],
+      "path": ".claude/skills/assimilation/pattern-extractor/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "repo-scanner",
+      "name": "Repo Scanner",
+      "description": "Deep scan repository structure to extract metadata, detect frameworks, and identify domain boundaries. Use when starting assimilation, analyzing a new codebase, or gathering project context.",
+      "category": "assimilation",
+      "tags": [
+        "repo-scanner",
+        "deep",
+        "scan",
+        "repository",
+        "structure",
+        "extract"
+      ],
+      "triggers": [
+        "starting assimilation of a new repository",
+        "analyzing an unfamiliar codebase",
+        "gathering project context before making changes",
+        "detecting frameworks and tooling"
+      ],
+      "path": ".claude/skills/assimilation/repo-scanner/SKILL.md",
+      "dependencies": []
+    },
+    {
+      "id": "skill-generator",
+      "name": "Skill Generator",
+      "description": "Transform extracted patterns into SKILL.md files following agentskills.io spec. Use when generating skills from patterns, creating reusable agent instructions, or completing the assimilation pipeline.",
+      "category": "assimilation",
+      "tags": [
+        "skill-generator",
+        "transform",
+        "extracted",
+        "patterns",
+        "into",
+        "skill"
+      ],
+      "triggers": [
+        "generating skills from extracted patterns",
+        "completing the assimilation pipeline",
+        "converting patternsjson skillmd files"
+      ],
+      "path": ".claude/skills/assimilation/skill-generator/SKILL.md",
+      "dependencies": []
+    }
+  ]
+}
