@@ -23,7 +23,7 @@ Start by understanding the current project context, then ask questions one at a 
 
 ### Interactive Questions with `ask_questions` Tool
 
-Use the `ask_questions` tool for a more interactive and efficient dialogue. This provides a native UI for the user to select options or input text.
+MUST Use the `ask_questions` tool for a more interactive and efficient dialogue. This provides a native UI for the user to select options or input text.
 
 #### Tool Parameters
 

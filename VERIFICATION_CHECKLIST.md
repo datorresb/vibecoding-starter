@@ -11,8 +11,11 @@ Use this checklist to verify that the Vibecoding Starter has been installed corr
 Run these commands and check for success:
 
 ```bash
-# 1. Check bd is installed
+# 1. Check task management tool is installed
+# Option A: bd (beads)
 bd --version
+# Option B: Backlog MCP — verify from MCP client:
+#   task_list(status="To Do", limit=5)
 
 # 2. Check skills directory exists
 ls -la .claude/skills/
@@ -20,10 +23,15 @@ ls -la .claude/skills/
 # 3. Check AGENTS.md exists
 ls -la AGENTS.md
 
-# 4. Test bd functionality
+# 4. Test task management functionality
+# Option A: bd
 bd create "Verification test task"
 bd list
 # bd close [task-id]  # Close the test task after confirming it works
+
+# Option B: Backlog MCP (from MCP client)
+#   task_create(title="Verification test task")
+#   task_list(status="To Do", limit=5)
 ```
 
 **All passing?** ✅ You're good to go!
@@ -64,15 +72,19 @@ curl --version || wget --version
 
 ---
 
-### 2. bd (beads) Installation
+### 2. Task Management Installation
 
-#### ✅ bd Command Available
+> **Note:** You need either bd (beads) OR Backlog MCP, not both. Choose based on your platform.
+
+#### Option A: bd (beads) — CLI tool, works with any editor
+
+##### ✅ bd Command Available
 
 ```bash
 which bd
 ```
 
-**Expected:** `/path/to/.cargo/bin/bd` or similar
+**Expected:** `/path/to/.local/bin/bd` or `/path/to/.cargo/bin/bd`
 
 **If failed:**
 - Install bd: `curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash`
@@ -80,44 +92,78 @@ which bd
 
 ---
 
-#### ✅ bd Version Check
+##### ✅ bd Version Check
 
 ```bash
 bd --version
 ```
 
-**Expected:** `beads-cli X.Y.Z`
+**Expected:** `bd version X.Y.Z`
 
 **If failed:**
 - Reinstall bd
-- Check PATH includes `$HOME/.cargo/bin`
+- Check PATH includes `$HOME/.local/bin` or `$HOME/.cargo/bin`
 
 ---
 
-#### ✅ bd in PATH
+##### ✅ bd in PATH
 
 ```bash
-echo $PATH | grep -q ".cargo/bin" && echo "✅ bd in PATH" || echo "❌ .cargo/bin not in PATH"
+(echo $PATH | grep -q ".local/bin" || echo $PATH | grep -q ".cargo/bin") && echo "✅ bd in PATH" || echo "❌ bd not in PATH"
 ```
 
 **Expected:** `✅ bd in PATH`
 
 **If failed:**
 ```bash
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 # Add to ~/.bashrc or ~/.zshrc permanently:
-echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
 ---
 
-### 3. Project Initialization
+#### Option B: Backlog MCP — MCP server, best for Claude Code
 
-#### ✅ bd Initialized in Project
+##### ✅ MCP Configuration Exists
 
 ```bash
-[ -d "backlog" ] && echo "✅ bd initialized" || echo "❌ bd not initialized"
+[ -f ".claude/mcp.json" ] && echo "✅ MCP config exists" || echo "❌ MCP config missing"
+```
+
+**Expected:** `✅ MCP config exists`
+
+**If failed:**
+- Create `.claude/mcp.json` with backlog server configuration
+- See AGENT_START.md Step 4b for setup instructions
+
+---
+
+##### ✅ Backlog MCP Responds (from MCP client only)
+
+From Claude Code or another MCP-compatible client:
+```
+task_list(status="To Do", limit=5)
+```
+
+**Expected:** Empty list or list of tasks (no errors)
+
+**If failed:**
+- Verify MCP server is configured correctly in `.claude/mcp.json`
+- Restart your MCP client
+- Check `npx @backlog-md/mcp --help` works from terminal
+
+---
+
+### 3. Project Initialization
+
+#### If using bd (beads):
+
+##### ✅ bd Initialized in Project
+
+```bash
+[ -d ".beads" ] && echo "✅ bd initialized" || echo "❌ bd not initialized"
 ```
 
 **Expected:** `✅ bd initialized`
@@ -125,15 +171,15 @@ source ~/.bashrc
 **If failed:**
 ```bash
 bd init
-# Answer prompts: project name, MCP/CLI choice, git integration
+# Answer prompts: prefix, git integration
 ```
 
 ---
 
-#### ✅ Backlog Configuration Exists
+##### ✅ bd Configuration Exists
 
 ```bash
-ls -la backlog/.backlog-config.yaml
+ls -la .beads/config.yaml
 ```
 
 **Expected:** File exists
@@ -143,16 +189,46 @@ ls -la backlog/.backlog-config.yaml
 
 ---
 
-#### ✅ Backlog File Exists
+##### ✅ bd Issues File Exists
 
 ```bash
-ls -la backlog/BACKLOG.md
+ls -la .beads/issues.jsonl
 ```
 
 **Expected:** File exists
 
 **If failed:**
-- Run `bd init` to create BACKLOG.md
+- Run `bd init` to create the issues store
+
+---
+
+#### If using Backlog MCP:
+
+##### ✅ Backlog Directory Exists
+
+```bash
+[ -d "backlog" ] && echo "✅ backlog dir exists" || echo "❌ backlog dir missing"
+```
+
+**Expected:** `✅ backlog dir exists`
+
+**If failed:**
+```bash
+mkdir -p backlog
+```
+
+---
+
+##### ✅ MCP Config References Backlog
+
+```bash
+grep -q "backlog" .claude/mcp.json 2>/dev/null && echo "✅ Backlog MCP configured" || echo "❌ Backlog MCP not in mcp.json"
+```
+
+**Expected:** `✅ Backlog MCP configured`
+
+**If failed:**
+- Add backlog server to `.claude/mcp.json` — see AGENT_START.md Step 4b
 
 ---
 
@@ -267,9 +343,11 @@ wc -l AGENTS.md | awk '{print $1}' | (read lines; [ "$lines" -gt 50 ] && echo "�
 
 ---
 
-### 6. bd Functionality
+### 6. Task Management Functionality
 
-#### ✅ Can Create Tasks
+#### If using bd (beads):
+
+##### ✅ Can Create Tasks
 
 ```bash
 bd create "Verification: Test task creation" > /dev/null && echo "✅ Task creation works"
@@ -279,11 +357,11 @@ bd create "Verification: Test task creation" > /dev/null && echo "✅ Task creat
 
 **If failed:**
 - Check bd is initialized: `bd init`
-- Check permissions on backlog/
+- Check permissions on `.beads/`
 
 ---
 
-#### ✅ Can List Tasks
+##### ✅ Can List Tasks
 
 ```bash
 bd list | grep -q "Verification" && echo "✅ Task listing works"
@@ -293,15 +371,15 @@ bd list | grep -q "Verification" && echo "✅ Task listing works"
 
 **If failed:**
 - Verify task was created
-- Check backlog/BACKLOG.md exists
+- Check `.beads/issues.jsonl` exists
 
 ---
 
-#### ✅ Can Close Tasks
+##### ✅ Can Close Tasks
 
 ```bash
 # Get the task ID for the verification task
-TASK_ID=$(bd list | grep "Verification" | awk '{print $1}')
+TASK_ID=$(bd list | grep "Verification" | awk '{print $2}')
 if [ -n "$TASK_ID" ]; then
   bd close "$TASK_ID" > /dev/null && echo "✅ Task closing works"
 else
@@ -313,7 +391,41 @@ fi
 
 **If failed:**
 - Check bd commands are working
-- Verify backlog/BACKLOG.md is writable
+- Run `bd doctor` for diagnostics
+
+---
+
+#### If using Backlog MCP:
+
+##### ✅ Can Create Tasks (from MCP client)
+
+```
+task_create(title="Verification: Test task creation", description="Setup verification test")
+```
+
+**Expected:** Task created with an ID
+
+---
+
+##### ✅ Can List Tasks (from MCP client)
+
+```
+task_list(status="To Do", limit=5)
+```
+
+**Expected:** Shows the verification task
+
+---
+
+##### ✅ Can Complete Tasks (from MCP client)
+
+```
+task_complete(id="<verification-task-id>")
+```
+
+**Expected:** Task marked complete
+
+> **Note:** Backlog MCP tests must be run from an MCP-compatible client (Claude Code, etc.), not from the terminal.
 
 ---
 
@@ -424,13 +536,23 @@ git add .claude/skills/ AGENTS.md > /dev/null 2>&1 && echo "✅ Git can track fi
 
 #### ✅ End-to-End Workflow Test
 
-**Instructions for agent:**
+**Instructions for agent (choose based on task tool):**
+
+**If using bd:**
 
 1. Create a task: `bd create "Integration test: Write a hello world function"`
 2. List tasks: `bd list` (confirm task appears)
 3. Use a skill: "Use the creating-skills skill to understand the skill format"
 4. Close task: `bd close [task-id]`
 5. Verify task closed: `bd list` (confirm task no longer open)
+
+**If using Backlog MCP:**
+
+1. Create a task: `task_create(title="Integration test: Write a hello world function")`
+2. List tasks: `task_list(status="To Do", limit=5)` (confirm task appears)
+3. Use a skill: "Use the creating-skills skill to understand the skill format"
+4. Complete task: `task_complete(id="<task-id>")`
+5. Verify task completed: `task_list(status="To Do", limit=5)` (confirm task no longer listed)
 
 **Expected:** All steps complete successfully
 
@@ -445,13 +567,17 @@ git add .claude/skills/ AGENTS.md > /dev/null 2>&1 && echo "✅ Git can track fi
 - [ ] Git installed and working
 - [ ] curl or wget available
 
-**bd (beads):**
+**Task Management (choose one):**
 
-- [ ] bd installed
-- [ ] bd in PATH
-- [ ] bd initialized in project
-- [ ] backlog/ directory exists
-- [ ] Can create, list, and close tasks
+*bd (beads):*
+- [ ] bd installed and in PATH
+- [ ] bd initialized (`.beads/` directory exists)
+- [ ] Can create, list, and close tasks (`bd create`, `bd list`, `bd close`)
+
+*Backlog MCP:*
+- [ ] MCP config exists (`.claude/mcp.json`)
+- [ ] Backlog directory exists (`backlog/`)
+- [ ] MCP client can call `task_list` without errors
 
 **Skills:**
 
@@ -483,7 +609,9 @@ git add .claude/skills/ AGENTS.md > /dev/null 2>&1 && echo "✅ Git can track fi
 
 **Next steps:**
 1. Read AGENTS.md for workflow guidance
-2. Create your first real task: `bd create "Your task here"`
+2. Create your first real task:
+   - bd: `bd create "Your task here"`
+   - Backlog MCP: `task_create(title="Your task here")`
 3. Start using skills in your work
 
 ---
@@ -522,11 +650,21 @@ git --version > /dev/null 2>&1 && echo "  ✅ Git installed" || echo "  ❌ Git 
 (curl --version > /dev/null 2>&1 || wget --version > /dev/null 2>&1) && echo "  ✅ curl/wget available" || echo "  ❌ curl/wget not found"
 echo ""
 
-# bd installation
-echo "2️⃣ bd (beads)"
-which bd > /dev/null 2>&1 && echo "  ✅ bd in PATH" || echo "  ❌ bd not in PATH"
-bd --version > /dev/null 2>&1 && echo "  ✅ bd works" || echo "  ❌ bd not working"
-[ -d "backlog" ] && echo "  ✅ bd initialized" || echo "  ❌ bd not initialized"
+# Task management
+echo "2️⃣ Task Management"
+if which bd > /dev/null 2>&1; then
+  echo "  ✅ bd in PATH"
+  bd --version > /dev/null 2>&1 && echo "  ✅ bd works" || echo "  ❌ bd not working"
+  [ -d ".beads" ] && echo "  ✅ bd initialized (.beads/)" || echo "  ❌ bd not initialized"
+else
+  echo "  ⚠️  bd not installed (OK if using Backlog MCP)"
+fi
+if [ -f ".claude/mcp.json" ] && grep -q backlog .claude/mcp.json 2>/dev/null; then
+  echo "  ✅ Backlog MCP configured"
+  [ -d "backlog" ] && echo "  ✅ backlog/ directory exists" || echo "  ⚠️  backlog/ not created yet"
+else
+  echo "  ⚠️  Backlog MCP not configured (OK if using bd)"
+fi
 echo ""
 
 # Skills

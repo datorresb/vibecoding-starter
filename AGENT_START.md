@@ -291,7 +291,21 @@ echo "✅ Skills will be installed to: $SKILLS_DIR"
 
 ---
 
-## Step 4: Install bd (beads)
+## Step 4: Install Task Management Tool
+
+**Ask the user which task management tool to install:**
+
+"Which task management system would you like to use?"
+- **bd (beads)** — CLI tool, works with any editor. Uses `.beads/` directory (SQLite + JSONL). Best for GitHub Copilot and general use.
+- **Backlog MCP** — MCP server, uses `backlog/` directory (Markdown files). Best for Claude Code (has native MCP support).
+- **Both** — Install both, choose per-project later.
+- **Neither** — Skip task management for now.
+
+**Record answer:** `[TASK_TOOL]`
+
+---
+
+### Step 4a: Install bd (beads) — if user chose bd or both
 
 **Check if already installed:**
 
@@ -301,18 +315,17 @@ which bd && bd --version
 
 **If not installed, install now:**
 
-### macOS/Linux:
+#### macOS/Linux:
 
 ```bash
 # Method 1: Direct installation script (recommended)
 curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
 
-
 # Method 2: Using Cargo (if Rust installed)
 cargo install beads-cli
 ```
 
-### Windows:
+#### Windows:
 
 ```bash
 # If Rust/Cargo installed:
@@ -326,19 +339,66 @@ cargo install beads-cli
 
 ```bash
 bd --version
-# Should output: beads-cli X.Y.Z
+# Should output: bd version X.Y.Z
 ```
 
 **If bd not in PATH:**
 
 ```bash
-# macOS/Linux: Add to PATH
-export PATH="$HOME/.cargo/bin:$PATH"
+# Check common install locations
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 # Add permanently to shell profile
-echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc  # or ~/.zshrc
+echo 'export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"' >> ~/.bashrc  # or ~/.zshrc
 source ~/.bashrc  # or ~/.zshrc
 ```
+
+---
+
+### Step 4b: Install Backlog MCP — if user chose Backlog MCP or both
+
+**Backlog MCP is an MCP server that provides task management via MCP tool calls.**
+
+> **Requirement:** Backlog MCP requires an MCP-compatible client (e.g., Claude Code, Claude Desktop).
+
+**Setup:**
+
+1. **Install the Backlog MCP server** (follow the Backlog.md project instructions):
+   ```bash
+   # Check if npx is available
+   npx @backlog-md/mcp --help 2>/dev/null || echo "Install via: npm install -g @backlog-md/mcp"
+   ```
+
+2. **Configure MCP in your client:**
+
+   For **Claude Code** — add to `.claude/mcp.json`:
+   ```json
+   {
+     "mcpServers": {
+       "backlog": {
+         "command": "npx",
+         "args": ["@backlog-md/mcp"]
+       }
+     }
+   }
+   ```
+
+   For **Claude Desktop** — add to Claude's MCP settings.
+
+3. **Initialize the backlog:**
+   ```bash
+   mkdir -p backlog
+   ```
+   The MCP server will create `backlog/BACKLOG.md` on first task creation.
+
+4. **Verify it works** (from your MCP client):
+   ```
+   task_list(status="To Do", limit=5)
+   ```
+
+**Skills to install:** `backlog-workflow` + `git-hygiene` + `subagent`
+
+> **Note:** Backlog MCP uses MCP tool calls (`task_create`, `task_list`, `task_search`, etc.) — these only work inside MCP-compatible clients, not from the terminal.
 
 ---
 
@@ -584,9 +644,9 @@ fi
 
 ---
 
-## Step 10: Initialize bd (if selected)
+## Step 10: Initialize Task Management Tool
 
-**If user chose bd in Step 5:**
+### If user chose bd (beads):
 
 ```bash
 cd [project-root]
@@ -607,7 +667,41 @@ bd doctor
 bd doctor --fix
 ```
 
-**Note:** If bd is already initialized, you can skip this step.
+**Note:** If bd is already initialized (`.beads/` directory exists), you can skip this step.
+
+**Verify:**
+
+```bash
+bd list  # Should return empty list or existing issues
+```
+
+---
+
+### If user chose Backlog MCP:
+
+1. **Verify MCP configuration exists:**
+   ```bash
+   if [ -f ".claude/mcp.json" ]; then
+     echo "✅ MCP config exists"
+     cat .claude/mcp.json
+   else
+     echo "⚠️ Create .claude/mcp.json with backlog server config"
+   fi
+   ```
+
+2. **Initialize backlog directory:**
+   ```bash
+   mkdir -p backlog
+   echo "✅ Backlog directory ready"
+   ```
+
+3. **Verify from MCP client:**
+   ```
+   task_list(status="To Do", limit=5)
+   ```
+   Should return empty list without errors.
+
+**Note:** Backlog MCP verification requires an MCP-compatible client. It cannot be tested from the terminal.
 
 ---
 

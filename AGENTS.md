@@ -26,11 +26,14 @@ Before starting ANY specialized task, you **MUST**:
 
 4. **Follow the skill instructions** completely
 
+5. **Track MANDATORY steps** — immediately create a `manage_todo_list` checklist of all required outputs and steps. Do NOT proceed to other work until every mandatory item is complete.
+
 #### ❌ What NOT To Do
 
 - **NEVER** guess how to perform a task if a skill exists for it
 - **NEVER** load all skills — use the index to filter first
 - **NEVER** skip loading a skill because you "already know" how to do it
+- **NEVER** skip a MANDATORY step because the user asked for something else — complete mandatory steps first, then address the new request
 
 #### ✅ Escape Hatch
 
@@ -231,11 +234,11 @@ Make your work visible to the team:
 
 ## Team Structure
 
-| Role | Responsibility | Key Skills |
-|------|----------------|------------|
-| **Tech Lead (Main Thread)** | Planning, design, delegation, review—orchestrates but does NOT edit files | technical-lead-role, task-delegation, backlog-workflow |
-| **Subagent** | Execution—completes discrete tasks with precision and hygiene | subagent, git-hygiene, specialized skills |
-| **Backlog** | Source of truth—all work is tracked as issues | backlog-workflow or bd |
+| Role | Responsibility | Key Skills | VS Code Agent |
+|------|----------------|------------|---------------|
+| **Tech Lead (Main Thread)** | Planning, design, delegation, review—orchestrates but does NOT edit files | technical-lead-role, task-delegation, backlog-workflow | `tech-lead.agent.md` |
+| **Subagent** | Execution—completes discrete tasks with precision and hygiene | subagent, git-hygiene, specialized skills | `code-simplifier.agent.md`, `review-test.agent.md` |
+| **Backlog** | Source of truth—all work is tracked as issues | backlog-workflow or bd | — |
 
 ### The Tech Lead / Subagent Model
 
@@ -275,11 +278,13 @@ Make your work visible to the team:
 ### Delegation Flow
 
 1. **Tech Lead creates issue**: `backlog create "Implement user authentication"`
-2. **Lead delegates**: Uses `Task` tool with task specification + relevant skill
+2. **Lead delegates**: Uses `Task` tool (or `agent` tool for VS Code subagents) with task specification + relevant skill
 3. **Subagent executes**: Follows the [subagent skill](/.claude/skills/core/subagent/) protocol
 4. **Subagent reports**: Returns summary of changes to Lead
 5. **Lead reviews**: Validates work meets acceptance criteria
 6. **Lead closes**: Updates backlog and ensures git push complete
+
+> **VS Code 1.109+**: Subagents run in parallel with dedicated context windows via `chat.customAgentInSubagent.enabled`. The tech-lead agent can invoke code-simplifier and review-test as subagents using the `agent` tool.
 
 ---
 
@@ -428,7 +433,19 @@ Located in `/.claude/skills/research/`:
 - Disagree constructively when necessary
 - Avoid sycophantic language ("You're absolutely right!", "Brilliant idea!")
 
-#### 5. Modular Design for AI
+#### 5. Skill Compliance: Complete Every MANDATORY Step
+
+When a skill is loaded, its MANDATORY steps are non-negotiable:
+
+- **Use `manage_todo_list` immediately** to create a checklist of ALL required steps from the skill
+- **Do NOT move to new user requests** until mandatory steps are complete
+- **If the user asks for something that skips a mandatory step**, say so: *"Before that, the [skill] requires X. Let me finish that first."*
+- **User requests do NOT override MANDATORY skill steps** — they add to them
+- **A skill is not complete** until all mandatory outputs exist (documents, artifacts, etc.)
+
+**Why this exists:** Without an active checklist, mandatory steps get lost in context as the conversation grows. The todo list acts as persistent memory that survives attention decay across turns.
+
+#### 6. Modular Design for AI
 
 Build code that is:
 - **Self-contained** — Each module delivers one clear responsibility
@@ -460,6 +477,41 @@ Build code that is:
 4. **Start a session** — Follow session lifecycle (git pull, check backlog)
 5. **Execute with hygiene** — Follow core principles
 6. **End cleanly** — Push, sync, hand off
+
+---
+
+## VS Code Integration (v1.109+)
+
+This workspace is pre-configured for VS Code's native agent features:
+
+### Custom Agents (`.github/agents/`)
+
+Three custom agents are available as `.agent.md` files:
+- **tech-lead** — Orchestrator that plans, delegates to subagents, and reviews
+- **code-simplifier** — Refactors code for clarity and consistency
+- **review-test** — Reviews code and writes unit tests
+
+All agents support model fallbacks and can run as parallel subagents.
+
+### Key VS Code Features
+
+| Feature | How to Use |
+|---------|------------|
+| **`/plan`** | Ask VS Code to create a structured implementation plan before coding |
+| **`/init`** | Generate or update workspace AI instructions from your codebase |
+| **Subagents** | Custom agents invoke each other via the `agent` tool |
+| **Search subagent** | Dedicated search agent preserves main context window |
+| **Copilot Memory** | Stores learnings across sessions (enable in settings) |
+| **Chat Diagnostics** | Right-click in Chat → "Diagnostics" to see loaded agents/skills |
+
+### Settings
+
+See `.vscode/settings.json` for all pre-configured agent settings. Key ones:
+- `chat.customAgentInSubagent.enabled` — Allow agents to invoke subagents
+- `chat.agentSkillsLocations` — Discover skills from `.claude/skills/`
+- `chat.askQuestions.enabled` — Agent asks clarifying questions via native UI
+- `github.copilot.chat.copilotMemory.enabled` — Persist context across sessions
+- `chat.tools.terminal.sandbox.enabled` — Restrict terminal commands to workspace
 
 ---
 

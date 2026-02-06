@@ -1,5 +1,8 @@
 ---
-description: 'Reviews Python code for simplicity and writes unit tests. Use for code quality improvements and test coverage.'
+name: review-test
+description: Reviews Python code for simplicity and writes unit tests. Use for code quality improvements and test coverage.
+user-invokable: true
+disable-model-invocation: false
 tools: []
 ---
 
