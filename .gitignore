@@ -15,6 +15,10 @@
 # Beads backlog system - local state only, not for version control
 .beads/
 
+# Git worktrees - local working copies
+.worktree/
+.worktrees/
+
 # OS-specific files
 .DS_Store
 Thumbs.db
@@ -61,8 +65,6 @@ Cargo.lock
 # IDEs
 .idea/
 *.iml
-.vscode/
-!.vscode/settings.json
 .project
 .classpath
 .settings/
