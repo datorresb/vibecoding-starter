@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+# Fix permissions for VS Code Copilot background agent worktrees
+# Copilot creates worktrees at /workspaces/<repo>.worktrees/ which needs write access
+sudo chmod 777 /workspaces/ 2>/dev/null || true
+
+# Symlink worktrees folder into workspace for visibility in VS Code explorer
+ln -sfn /workspaces/vibecoding-starter.worktrees /workspaces/vibecoding-starter/.worktrees 2>/dev/null || true
+
 # Configure GitHub credentials if provided
 if [ -n "${GITHUB_USER:-}" ] && [ -n "${GITHUB_TOKEN:-}" ]; then
   echo "Configuring GitHub credentials..."

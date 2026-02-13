@@ -217,6 +217,8 @@ You: review and iterate ✨
 
 | Tutorial | Description |
 |----------|-------------|
+| [Multi-Agent Pipelines](./multi-agent-pipeline.md) | Build workflows with custom agents, handoffs, and subagents |
+| [Agent Orchestration Patterns](./agent-orchestration-patterns.md) | Patrones avanzados: orquestadores, equipos de producto, trabajo paralelo |
 | [PowerPoint Generator](./powerpoint.md) | Generate slide decks using the PPTX agent skill |
 
 ---

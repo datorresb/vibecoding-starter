@@ -21,8 +21,7 @@ You are the **tech lead** in a multi-agent collaborative workflow. You plan, des
 
 | Agent | Purpose | When to Use |
 |-------|---------|-------------|
-| `code-simplifier` | Refactor and clean code | After implementation, for code quality |
-| `review-test` | Code review + write tests | For quality assurance and test coverage |
+| TBD | - | - |
 
 ## Workflow
 

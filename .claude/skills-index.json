@@ -1,6 +1,6 @@
 {
   "v": "1.1.0",
-  "n": 37,
+  "n": 38,
   "skills": {
     "core": [
       {
@@ -114,6 +114,11 @@
         "id": "pdf",
         "desc": "PDF processing — reading, merging, splitting, rotating, creating, filling forms, extracting text/tables, watermarks, OCR, and encryption. Use when working with .pdf files.",
         "path": ".claude/skills/engineering/pdf/SKILL.md"
+      },
+      {
+        "id": "mcp-builder",
+        "desc": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers in Python or TypeScript.",
+        "path": ".claude/skills/engineering/mcp-builder/SKILL.md"
       }
     ],
     "devops": [
