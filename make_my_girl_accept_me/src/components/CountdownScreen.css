@@ -1,0 +1,165 @@
+.countdown-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: background 1s ease;
+}
+
+.countdown-prelude {
+    text-align: center;
+}
+
+.prelude-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    color: var(--gold);
+    animation: fadeInUp 0.8s ease-out both;
+}
+
+.prelude-text.delay {
+    animation-delay: 0.5s;
+    color: var(--white);
+}
+
+.countdown-timer-section {
+    text-align: center;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.countdown-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.countdown-number {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    animation: countPop 0.3s ease-out;
+}
+
+@keyframes countPop {
+    0% {
+        transform: scale(1.3);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.countdown-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin: 12px auto 0;
+    overflow: hidden;
+}
+
+.countdown-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--red));
+    border-radius: 2px;
+    transition: width 1s linear;
+}
+
+.countdown-question {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeIn 1s ease-out 0.5s both;
+}
+
+.countdown-question h2 {
+    font-family: var(--font-script);
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    color: var(--pink);
+    margin-bottom: 4px;
+}
+
+.countdown-question p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 12px;
+}
+
+.the-question {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    color: var(--white);
+    animation: float 2s ease-in-out infinite;
+}
+
+.deal-buttons {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deal-btn {
+    font-family: var(--font-display);
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.deal-btn.yes {
+    font-size: 1.5rem;
+    padding: 20px 60px;
+    background: linear-gradient(135deg, var(--gold), #f0d060);
+    color: var(--dark);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+    animation: pulse 1.2s ease-in-out infinite;
+    z-index: 2;
+    transition: transform 0.5s ease;
+}
+
+.deal-btn.yes:hover {
+    box-shadow: 0 0 60px rgba(212, 175, 55, 0.8);
+    transform: scale(1.1) !important;
+}
+
+.deal-btn.no {
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    z-index: 1;
+}
+
+.no-hint {
+    position: absolute;
+    bottom: 40px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    text-align: center;
+    padding: 0 20px;
+}
+
+@media (max-width: 600px) {
+    .deal-btn.yes {
+        font-size: 1.2rem;
+        padding: 16px 40px;
+    }
+}
