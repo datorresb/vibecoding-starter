@@ -236,15 +236,15 @@ Make your work visible to the team:
 
 | Role | Responsibility | Key Skills | VS Code Agent |
 |------|----------------|------------|---------------|
-| **Tech Lead (Main Thread)** | Planning, design, delegation, review—orchestrates but does NOT edit files | technical-lead-role, task-delegation, backlog-workflow | `tech-lead.agent.md` |
-| **Subagent** | Execution—completes discrete tasks with precision and hygiene | subagent, git-hygiene, specialized skills | `code-simplifier.agent.md`, `review-test.agent.md` |
+| **Lead Agent** | Orchestrates workflow, plans, delegates, reviews | technical-lead-role, task-delegation, backlog-workflow | `*.agent.md` |
+| **Subagent** | Execution—completes discrete tasks with precision | subagent, specialized skills | `*.agent.md` |
 | **Backlog** | Source of truth—all work is tracked as issues | backlog-workflow or bd | — |
 
 ### The Tech Lead / Subagent Model
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        TECH LEAD                                │
+│                        LEAD AGENT                               │
 │           (Main conversational thread - orchestrator)           │
 │                                                                 │
 │   • Understands user intent                                     │
@@ -253,7 +253,6 @@ Make your work visible to the team:
 │   • Creates backlog issues                                      │
 │   • Delegates via Task tool                                     │
 │   • Reviews results                                             │
-│   • Does NOT edit files                                         │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               │ backlog create → Task tool
@@ -486,12 +485,8 @@ This workspace is pre-configured for VS Code's native agent features:
 
 ### Custom Agents (`.github/agents/`)
 
-Three custom agents are available as `.agent.md` files:
-- **tech-lead** — Orchestrator that plans, delegates to subagents, and reviews
-- **code-simplifier** — Refactors code for clarity and consistency
-- **review-test** — Reviews code and writes unit tests
-
-All agents support model fallbacks and can run as parallel subagents.
+Custom agents are available as `.agent.md` files, each with specific tools and handoff configurations.
+These agents can invoke each other programmatically for complex workflows.
 
 ### Key VS Code Features
 

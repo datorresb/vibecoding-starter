@@ -29,7 +29,7 @@ A **project initializer** with pre-configured Agent Skills for AI-assisted devel
 - ✅ **Batteries Included** — DevContainer, git hygiene, task management
 - ✅ **Two Task Tools** — bd (CLI) or Backlog MCP (MCP server) — your choice
 - ✅ **VS Code 1.109 Ready** — Subagents, orchestration, Agent Skills GA, Copilot Memory
-- ✅ **Custom Agents** — Tech-lead orchestrator, code-simplifier, review-test
+- ✅ **Custom Agents** — Create your own agents with specific tools and handoff flows
 - ✅ **Extensible** — Create custom skills and agents for your workflow
 - ✅ **Reusable** — One clone, use for all your projects
 
@@ -79,16 +79,16 @@ flowchart LR
     AGENT -->|"4. Execute"| OUTPUT["Code, Docs,\nTests, Config"]
 ```
 
-### Tech Lead / Subagent Model
+### Subagent Model
 
 ```mermaid
 flowchart TB
-    USER["👤 You"] -->|"Describe what\nyou want"| TL["🧠 tech-lead.agent.md\n(Orchestrator)"]
+    USER["👤 You"] -->|"Describe what\nyou want"| TL["🧠 *.agent.md\n(Orchestrator)"]
     TL -->|"Clarify"| AQ["❓ ask_questions"]
     TL -->|"Plan"| PLAN["📋 Plan Agent\n(/plan command)"]
     TL -->|"Track"| TODO["✅ manage_todo_list"]
-    TL -->|"Delegate\n(parallel)"| SA1["⚡ code-simplifier\nRefactor & clean"]
-    TL -->|"Delegate\n(parallel)"| SA2["⚡ review-test\nReview & test"]
+    TL -->|"Delegate\n(parallel)"| SA1["⚡ *\nRefactor & clean"]
+    TL -->|"Delegate\n(parallel)"| SA2["⚡ *\nReview & test"]
     TL -->|"Delegate"| SA3["⚡ Custom Subagent\n(your .agent.md)"]
     SA1 -->|"Result"| TL
     SA2 -->|"Result"| TL
@@ -179,9 +179,7 @@ Your agent will:
 
 | Agent | Role | Invocation |
 |-------|------|------------|
-| **tech-lead** | Orchestrator — plans, delegates, reviews. Never edits files. | User-invokable + subagent |
-| **code-simplifier** | Refactors code for clarity and consistency | User-invokable + subagent |
-| **review-test** | Reviews Python code and writes unit tests | User-invokable + subagent |
+| TBD | - | - |
 
 All agents can run as **parallel subagents** via `chat.customAgentInSubagent.enabled`.
 ### Skills Directory
@@ -255,9 +253,7 @@ Skills are markdown files that teach AI agents specialized capabilities:
 │       └── assimilation/    # Repo assimilation skills
 ├── .github/
 │   ├── agents/              # VS Code Custom Agents (.agent.md)
-│   │   ├── tech-lead.agent.md
-│   │   ├── code-simplifier.agent.md
-│   │   └── review-test.agent.md
+│   │   └── *.agent.md
 │   ├── copilot-instructions.md  # Copilot safety rules
 │   └── prompts/             # Reusable prompt files (.prompt.md)
 ├── .vscode/
