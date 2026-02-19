@@ -1,0 +1,18 @@
+[project]
+name = "vibecoding-starter"
+version = "0.1.0"
+description = "Workspace Python environment managed with uv"
+requires-python = ">=3.11"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = [
+    "playwright>=1.58.0",
+]
