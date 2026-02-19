@@ -45,4 +45,12 @@ fi
 uv sync
 echo "✅ Python dependencies synced"
 
+# Check for bd (beads) task management CLI
+if command -v bd &>/dev/null; then
+  echo "✅ bd $(bd --version 2>/dev/null || echo '') available"
+else
+  echo "ℹ️  bd (beads) not installed — task management via AGENT_START.md setup"
+  echo "   Install manually: curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash"
+fi
+
 echo "postCreate done"

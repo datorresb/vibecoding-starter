@@ -340,6 +340,48 @@ uv sync
 
 ---
 
+## Task Management (bd / beads)
+
+This workspace uses **[bd (beads)](https://github.com/steveyegge/beads)** as the primary task management CLI. bd is **optional** — it is installed via AGENT_START.md when the user chooses it.
+
+### Guard: Always Check Before Using
+
+Before running ANY `bd` command, you **MUST** check if it's available:
+
+```bash
+command -v bd &>/dev/null && echo "BD_AVAILABLE=true" || echo "BD_AVAILABLE=false"
+```
+
+### If bd is NOT installed
+
+**Do NOT silently fail.** Instead:
+
+1. **Inform the user:**
+   > ⚠️ `bd` (beads) is not installed. Task management commands (`bd create`, `bd list`, `bd sync`) are unavailable.
+   >
+   > To install: `curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash`
+   > Or with Cargo: `cargo install beads-cli`
+   >
+   > After installing, run `bd init` in the project root.
+
+2. **Continue without bd** — Use `manage_todo_list` for task tracking within the session. Skip `bd sync` in the landing-the-plane workflow.
+
+3. **Never block on bd** — A missing `bd` should never prevent work from being done.
+
+### If bd IS installed
+
+Use it normally per the `bd` skill. The standard commands are:
+
+```bash
+bd create "Task description"   # Create a task
+bd list                         # List tasks
+bd close <id>                   # Close a task
+bd sync                         # Sync backlog state
+bd init                         # Initialize (first time only)
+```
+
+---
+
 ## Session Lifecycle
 
 ### Starting a Session
@@ -347,9 +389,10 @@ uv sync
 1. **Check git status**: `git status` (any uncommitted changes?)
 2. **Sync with remote**: `git pull --rebase`
 3. **Ensure Python venv**: `[[ -d .venv ]] || uv venv && source .venv/bin/activate && uv sync`
-4. **Review backlog**: Check for in-progress or ready tasks
-5. **Claim work**: Update task status to in_progress
-6. **Read context**: Review relevant documentation (AGENTS.md, README, etc.)
+4. **Check bd availability**: `command -v bd &>/dev/null` (if missing, inform user — see Task Management section)
+5. **Review backlog**: Check for in-progress or ready tasks (use `bd list` if available, or check backlog/ directory)
+6. **Claim work**: Update task status to in_progress
+7. **Read context**: Review relevant documentation (AGENTS.md, README, etc.)
 
 ### During Work
 
@@ -590,7 +633,7 @@ See `.vscode/settings.json` for all pre-configured agent settings. Key ones:
 4. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash
    git pull --rebase
-   bd sync
+   command -v bd &>/dev/null && bd sync
    git push
    git status  # MUST show "up to date with origin"
    ```
