@@ -287,15 +287,69 @@ Make your work visible to the team:
 
 ---
 
+## Python Environment (uv)
+
+This workspace uses **[uv](https://docs.astral.sh/uv/)** as the sole Python environment manager. All Python work MUST happen inside the workspace virtual environment.
+
+### Rules
+
+1. **Always use the workspace venv** — Located at `.venv/` in the project root. Activate it before any Python command.
+2. **If `.venv/` does not exist, create it** — Run `uv venv` from the workspace root. This uses the Python version from `pyproject.toml` (`requires-python`).
+3. **Install packages with `uv`** — Use `uv pip install <package>` or `uv add <package>` (to also record in `pyproject.toml`). Never use raw `pip install`.
+4. **Never install a separate Python** — Do not use `apt install python`, `pyenv`, `conda`, or any other Python version manager. `uv` handles Python resolution.
+5. **Keep `pyproject.toml` as source of truth** — All project dependencies and Python version constraints live in `pyproject.toml` under `[project]` and `[dependency-groups]`.
+6. **Sync before running** — If `pyproject.toml` changed, run `uv sync` to ensure `.venv/` matches.
+
+### Quick Reference
+
+```bash
+# Activate venv (if not already active)
+source .venv/bin/activate
+
+# Create venv (if missing)
+uv venv
+
+# Install a dependency
+uv add <package>          # adds to pyproject.toml + installs
+uv pip install <package>  # installs only (no pyproject.toml update)
+
+# Sync all deps from pyproject.toml
+uv sync
+
+# Run a script without manual activation
+uv run python script.py
+
+# Run a tool (e.g., pytest) without manual activation
+uv run pytest
+```
+
+### Session Startup Check
+
+Every session that involves Python MUST start with:
+
+```bash
+# Ensure venv exists
+[[ -d .venv ]] || uv venv
+
+# Activate
+source .venv/bin/activate
+
+# Sync deps
+uv sync
+```
+
+---
+
 ## Session Lifecycle
 
 ### Starting a Session
 
 1. **Check git status**: `git status` (any uncommitted changes?)
 2. **Sync with remote**: `git pull --rebase`
-3. **Review backlog**: Check for in-progress or ready tasks
-4. **Claim work**: Update task status to in_progress
-5. **Read context**: Review relevant documentation (AGENTS.md, README, etc.)
+3. **Ensure Python venv**: `[[ -d .venv ]] || uv venv && source .venv/bin/activate && uv sync`
+4. **Review backlog**: Check for in-progress or ready tasks
+5. **Claim work**: Update task status to in_progress
+6. **Read context**: Review relevant documentation (AGENTS.md, README, etc.)
 
 ### During Work
 
