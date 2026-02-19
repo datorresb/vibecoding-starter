@@ -380,6 +380,15 @@ Located in `/.claude/skills/documentation/`:
 - **api-documentation** — API docs generation
 - **adr** — Architecture Decision Records
 
+### Vercel Skills (UI/UX & React)
+
+Located in `/.claude/skills/vercel/`:
+
+- **web-design-guidelines** — 100+ rules for accessible, performant web UI (a11y, forms, animation, dark mode, i18n, hydration)
+- **react-best-practices** — 57 React/Next.js performance rules (waterfalls, bundle size, re-renders, server-side)
+- **composition-patterns** — Component architecture, state management, and React 19 patterns
+- **react-native-skills** — React Native performance, navigation, animations, and monorepo patterns
+
 ### Research Skills
 
 Located in `/.claude/skills/research/`:
