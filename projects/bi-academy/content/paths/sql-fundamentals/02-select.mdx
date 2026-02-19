@@ -1,0 +1,89 @@
+import Callout from '../../../src/components/Callout'
+
+# SELECT y Filtrado
+
+El comando `SELECT` es la herramienta principal para extraer datos. En esta lección aprenderás a seleccionar columnas específicas, filtrar resultados y ordenar datos.
+
+## Seleccionar columnas específicas
+
+En vez de usar `*` (todas las columnas), es mejor práctica seleccionar solo las que necesitas:
+
+```sql
+SELECT name, email, city
+FROM customers;
+```
+
+<Callout type="tip">
+En Power BI y en modelamiento de datos, siempre selecciona solo las columnas que necesitas. Esto mejora el rendimiento y hace los modelos más limpios.
+</Callout>
+
+## Filtrar con WHERE
+
+La cláusula `WHERE` filtra los registros que cumplen una condición:
+
+```sql
+SELECT name, city
+FROM customers
+WHERE city = 'Miami';
+```
+
+### Operadores de comparación
+
+| Operador | Significado | Ejemplo |
+|----------|-------------|---------|
+| `=` | Igual a | `WHERE status = 'active'` |
+| `!=` o `<>` | Diferente de | `WHERE status != 'inactive'` |
+| `>`, `<` | Mayor/menor que | `WHERE total > 100` |
+| `>=`, `<=` | Mayor/menor o igual | `WHERE age >= 18` |
+| `BETWEEN` | Rango inclusivo | `WHERE date BETWEEN '2024-01-01' AND '2024-12-31'` |
+| `IN` | Lista de valores | `WHERE city IN ('Miami', 'NYC', 'LA')` |
+| `LIKE` | Patrón de texto | `WHERE name LIKE 'J%'` |
+| `IS NULL` | Valor nulo | `WHERE email IS NULL` |
+
+## Combinar condiciones
+
+Usa `AND` y `OR` para combinar filtros:
+
+```sql
+SELECT name, city, total
+FROM customers
+WHERE city = 'Miami'
+  AND total > 500;
+```
+
+## Ordenar resultados
+
+`ORDER BY` ordena los resultados:
+
+```sql
+SELECT name, total
+FROM orders
+ORDER BY total DESC;
+```
+
+- `ASC` — ascendente (predeterminado)
+- `DESC` — descendente
+
+## Limitar resultados
+
+`LIMIT` restringe la cantidad de filas devueltas:
+
+```sql
+SELECT name, total
+FROM orders
+ORDER BY total DESC
+LIMIT 10;
+```
+
+<Callout type="info">
+En SQL Server (que usamos con Power BI), se usa `TOP` en vez de `LIMIT`:
+`SELECT TOP 10 name, total FROM orders ORDER BY total DESC`
+</Callout>
+
+## Resumen
+
+- Selecciona solo las columnas que necesitas
+- `WHERE` filtra filas según condiciones
+- Combina condiciones con `AND` / `OR`
+- `ORDER BY` ordena resultados
+- `LIMIT` (o `TOP` en SQL Server) restringe la cantidad de filas

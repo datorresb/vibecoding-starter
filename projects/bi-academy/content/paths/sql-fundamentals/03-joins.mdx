@@ -1,0 +1,103 @@
+import Callout from '../../../src/components/Callout'
+
+# JOINs entre Tablas
+
+Los JOINs son fundamentales en BI. Permiten combinar datos de múltiples tablas para crear análisis completos. En modelamiento dimensional, los JOINs conectan tablas de **hechos** con tablas de **dimensiones**.
+
+## ¿Por qué necesitamos JOINs?
+
+Los datos no viven en una sola tabla. Por ejemplo:
+
+- La tabla `orders` tiene `customer_id`, pero no el nombre del cliente
+- La tabla `customers` tiene el nombre, pero no los detalles del pedido
+- Necesitamos **combinar** ambas tablas para obtener un reporte útil
+
+## INNER JOIN
+
+Devuelve solo los registros que tienen coincidencia en **ambas** tablas:
+
+```sql
+SELECT 
+  c.name,
+  o.order_date,
+  o.total
+FROM customers c
+INNER JOIN orders o ON c.id = o.customer_id;
+```
+
+<Callout type="tip">
+Usa **alias** (`c` para customers, `o` para orders) para que el query sea más legible. Es una práctica estándar en la industria.
+</Callout>
+
+## LEFT JOIN
+
+Devuelve **todos** los registros de la tabla izquierda, y los que coincidan de la derecha. Si no hay coincidencia, las columnas de la derecha serán `NULL`:
+
+```sql
+SELECT 
+  c.name,
+  o.order_date,
+  o.total
+FROM customers c
+LEFT JOIN orders o ON c.id = o.customer_id;
+```
+
+Esto incluye **todos los clientes**, incluso los que no tienen pedidos.
+
+## Encontrar registros sin coincidencia
+
+Un patrón muy útil en BI — encontrar lo que **falta**:
+
+```sql
+-- Clientes sin pedidos
+SELECT c.name
+FROM customers c
+LEFT JOIN orders o ON c.id = o.customer_id
+WHERE o.id IS NULL;
+```
+
+<Callout type="warning">
+Este patrón es crítico para validación de datos. Úsalo para encontrar: clientes sin ventas, productos sin inventario, empleados sin asignaciones, etc.
+</Callout>
+
+## RIGHT JOIN y FULL JOIN
+
+| Tipo | Qué devuelve |
+|------|-------------|
+| `INNER JOIN` | Solo coincidencias en ambas tablas |
+| `LEFT JOIN` | Todo de la izquierda + coincidencias de la derecha |
+| `RIGHT JOIN` | Todo de la derecha + coincidencias de la izquierda |
+| `FULL JOIN` | Todo de ambas tablas |
+
+En la práctica, `INNER JOIN` y `LEFT JOIN` cubren el 95% de los casos.
+
+## JOINs múltiples
+
+Puedes unir más de dos tablas:
+
+```sql
+SELECT 
+  c.name AS customer,
+  p.name AS product,
+  o.quantity,
+  o.total
+FROM orders o
+INNER JOIN customers c ON o.customer_id = c.id
+INNER JOIN products p ON o.product_id = p.id;
+```
+
+## Conexión con Power BI
+
+En Power BI, las **relaciones** en el modelo de datos son JOINs visuales. Cuando conectas la tabla `Sales` con la tabla `Date` en el modelo, Power BI ejecuta un JOIN automáticamente al generar los visuales.
+
+<Callout type="info">
+Entender JOINs en SQL te ayudará a diseñar mejores modelos en Power BI. Las relaciones en el modelo semántico siguen la misma lógica.
+</Callout>
+
+## Resumen
+
+- `INNER JOIN` — solo coincidencias
+- `LEFT JOIN` — todo de la izquierda + coincidencias
+- `LEFT JOIN ... WHERE IS NULL` — encontrar lo que falta
+- Usa alias para legibilidad
+- Los JOINs son la base de las relaciones en Power BI

@@ -1,0 +1,51 @@
+import Callout from '../../../src/components/Callout'
+
+# Introducción a SQL
+
+**SQL** (Structured Query Language) es el lenguaje estándar para interactuar con bases de datos relacionales. En Business Intelligence, SQL es la base de todo: desde extraer datos hasta construir modelos analíticos.
+
+## ¿Por qué SQL es importante en BI?
+
+En nuestra compañía, SQL se usa en cada paso del proceso:
+
+- **Extracción de datos** — Consultar las bases de datos fuente
+- **Transformación** — Limpiar y preparar datos para análisis
+- **Modelamiento** — Crear vistas y tablas para el modelo semántico
+- **Validación** — Verificar que los datos y cálculos sean correctos
+
+<Callout type="tip">
+No necesitas memorizar toda la sintaxis. Lo importante es entender los conceptos y saber buscar la referencia cuando la necesites.
+</Callout>
+
+## Conceptos fundamentales
+
+Una **base de datos relacional** organiza información en **tablas**. Cada tabla tiene:
+
+| Concepto | Descripción | Ejemplo |
+|----------|-------------|---------|
+| **Tabla** | Colección de datos relacionados | `customers`, `orders` |
+| **Columna** | Un atributo o campo | `name`, `email`, `order_date` |
+| **Fila** | Un registro individual | Un cliente específico |
+| **Clave primaria** | Identificador único de cada fila | `customer_id` |
+| **Clave foránea** | Referencia a otra tabla | `orders.customer_id → customers.id` |
+
+## Tu primer query
+
+El comando más básico en SQL es `SELECT`:
+
+```sql
+SELECT * FROM customers;
+```
+
+Esto devuelve **todas las columnas** (`*`) de **todos los registros** de la tabla `customers`.
+
+<Callout type="info">
+En las próximas lecciones usaremos un editor SQL interactivo donde podrás escribir y ejecutar queries directamente en el navegador.
+</Callout>
+
+## Resumen
+
+- SQL es el lenguaje universal para trabajar con datos
+- Las bases de datos organizan información en tablas con filas y columnas
+- `SELECT` es el comando fundamental para consultar datos
+- En BI, SQL se usa en extracción, transformación, modelamiento y validación
