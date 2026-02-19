@@ -287,15 +287,151 @@ Make your work visible to the team:
 
 ---
 
+## Python Environment (uv)
+
+This workspace uses **[uv](https://docs.astral.sh/uv/)** as the sole Python environment manager. All Python work MUST happen inside the workspace virtual environment.
+
+### Rules
+
+1. **Always use the workspace venv** — Located at `.venv/` in the project root. Activate it before any Python command.
+2. **If `.venv/` does not exist, create it** — Run `uv venv` from the workspace root. This uses the Python version from `pyproject.toml` (`requires-python`).
+3. **Install packages with `uv`** — Use `uv pip install <package>` or `uv add <package>` (to also record in `pyproject.toml`). Never use raw `pip install`.
+4. **Never install a separate Python** — Do not use `apt install python`, `pyenv`, `conda`, or any other Python version manager. `uv` handles Python resolution.
+5. **Keep `pyproject.toml` as source of truth** — All project dependencies and Python version constraints live in `pyproject.toml` under `[project]` and `[dependency-groups]`.
+6. **Sync before running** — If `pyproject.toml` changed, run `uv sync` to ensure `.venv/` matches.
+
+### Quick Reference
+
+```bash
+# Activate venv (if not already active)
+source .venv/bin/activate
+
+# Create venv (if missing)
+uv venv
+
+# Install a dependency
+uv add <package>          # adds to pyproject.toml + installs
+uv pip install <package>  # installs only (no pyproject.toml update)
+
+# Sync all deps from pyproject.toml
+uv sync
+
+# Run a script without manual activation
+uv run python script.py
+
+# Run a tool (e.g., pytest) without manual activation
+uv run pytest
+```
+
+### Session Startup Check
+
+Every session that involves Python MUST start with:
+
+```bash
+# Ensure venv exists
+[[ -d .venv ]] || uv venv
+
+# Activate
+source .venv/bin/activate
+
+# Sync deps
+uv sync
+```
+
+---
+
+## Task Management (bd or Backlog MCP)
+
+This workspace supports **two task management systems**. Neither is pre-installed — the user chooses during AGENT_START.md setup (Step 4).
+
+| Tool | Type | How It Works | Best For |
+|------|------|-------------|----------|
+| **[bd (beads)](https://github.com/steveyegge/beads)** | CLI | Terminal commands (`bd create`, `bd list`) | GitHub Copilot, any editor |
+| **[Backlog MCP](https://www.npmjs.com/package/@backlog-md/mcp)** | MCP Server | MCP tool calls (`task_create`, `task_list`) | Claude Code, Gemini |
+
+### Guard: Always Detect Before Using
+
+Before attempting ANY task management operation, you **MUST** detect what's available:
+
+```bash
+# Check bd (beads CLI)
+command -v bd &>/dev/null && echo "BD=true" || echo "BD=false"
+
+# Check Backlog MCP (look for config)
+[[ -f ".claude/mcp.json" ]] && grep -q backlog .claude/mcp.json 2>/dev/null && echo "BACKLOG_MCP=true" || echo "BACKLOG_MCP=false"
+
+# Check for backlog directory (used by either tool)
+[[ -d "backlog" ]] && echo "BACKLOG_DIR=true" || echo "BACKLOG_DIR=false"
+```
+
+### Decision Tree
+
+| bd? | Backlog MCP? | What to do |
+|-----|-------------|------------|
+| ✅ | ✅ | Use bd (CLI works everywhere, MCP only in compatible clients) |
+| ✅ | ❌ | Use bd |
+| ❌ | ✅ | Use Backlog MCP tool calls |
+| ❌ | ❌ | **Fallback:** use `manage_todo_list` + inform user (see below) |
+
+### If NEITHER is installed
+
+**Do NOT silently fail.** Instead:
+
+1. **Inform the user once per session:**
+   > ⚠️ No task management tool detected (`bd` or Backlog MCP).
+   >
+   > **Option A — bd (recommended for Copilot):**
+   > ```
+   > curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
+   > bd init
+   > ```
+   >
+   > **Option B — Backlog MCP (for Claude Code):**
+   > Add to `.claude/mcp.json` or `.vscode/mcp.json`:
+   > ```json
+   > { "servers": { "backlog": { "command": "npx", "args": ["@backlog-md/mcp"] } } }
+   > ```
+   >
+   > Or run AGENT_START.md Step 4 for guided setup.
+
+2. **Continue with `manage_todo_list`** — Use it as session-scoped fallback for task tracking.
+
+3. **Never block on missing tools** — Work must continue regardless.
+
+### bd Quick Reference
+
+```bash
+bd create "Task description"   # Create a task
+bd list                         # List tasks
+bd close <id>                   # Close a task
+bd sync                         # Sync backlog state
+bd init                         # Initialize (first time only)
+```
+
+### Backlog MCP Quick Reference
+
+These work inside MCP-compatible clients only (Claude Code, VS Code with MCP):
+
+```
+task_create(title="Task description")   # Create a task
+task_list(status="To Do", limit=10)     # List tasks
+task_update(id="...", status="Done")    # Update task
+task_search(query="keyword")            # Search tasks
+```
+
+---
+
 ## Session Lifecycle
 
 ### Starting a Session
 
 1. **Check git status**: `git status` (any uncommitted changes?)
 2. **Sync with remote**: `git pull --rebase`
-3. **Review backlog**: Check for in-progress or ready tasks
-4. **Claim work**: Update task status to in_progress
-5. **Read context**: Review relevant documentation (AGENTS.md, README, etc.)
+3. **Ensure Python venv**: `[[ -d .venv ]] || uv venv && source .venv/bin/activate && uv sync`
+4. **Check task tools**: Detect bd and/or Backlog MCP availability (see Task Management section)
+5. **Review backlog**: Use `bd list`, `task_list()`, or check `backlog/` directory
+6. **Claim work**: Update task status to in_progress
+7. **Read context**: Review relevant documentation (AGENTS.md, README, etc.)
 
 ### During Work
 
@@ -379,6 +515,15 @@ Located in `/.claude/skills/documentation/`:
 - **technical-writing** — Technical documentation
 - **api-documentation** — API docs generation
 - **adr** — Architecture Decision Records
+
+### Vercel Skills (UI/UX & React)
+
+Located in `/.claude/skills/vercel/`:
+
+- **web-design-guidelines** — 100+ rules for accessible, performant web UI (a11y, forms, animation, dark mode, i18n, hydration)
+- **react-best-practices** — 57 React/Next.js performance rules (waterfalls, bundle size, re-renders, server-side)
+- **composition-patterns** — Component architecture, state management, and React 19 patterns
+- **react-native-skills** — React Native performance, navigation, animations, and monorepo patterns
 
 ### Research Skills
 
@@ -527,7 +672,7 @@ See `.vscode/settings.json` for all pre-configured agent settings. Key ones:
 4. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash
    git pull --rebase
-   bd sync
+   command -v bd &>/dev/null && bd sync
    git push
    git status  # MUST show "up to date with origin"
    ```

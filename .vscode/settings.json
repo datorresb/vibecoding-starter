@@ -1,0 +1,17 @@
+{
+    // Agent & Subagent settings
+    "chat.customAgentInSubagent.enabled": true,
+    // Enable ask_questions interactive UI for agents
+    "chat.askQuestions.enabled": true,
+    // Auto-approve tool usage (no confirmation dialogs)
+    "chat.tools.global.autoApprove": true,
+    // Terminal sandbox - disable for devcontainers (already isolated)
+    "chat.tools.terminal.sandbox.enabled": false,
+    // Agent skills system
+    "chat.useAgentSkills": true,
+    "chat.experimental.useSkillAdherencePrompt": true,
+    // Nested agent discovery (finds .agent.md in subdirectories)
+    "chat.useNestedAgentsMdFiles": true,
+    // Copilot Memory - persist context across sessions
+    "github.copilot.chat.copilotMemory.enabled": true
+}

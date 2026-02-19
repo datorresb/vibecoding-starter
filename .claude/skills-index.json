@@ -1,6 +1,6 @@
 {
   "v": "1.1.0",
-  "n": 38,
+  "n": 43,
   "skills": {
     "core": [
       {
@@ -119,6 +119,11 @@
         "id": "mcp-builder",
         "desc": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers in Python or TypeScript.",
         "path": ".claude/skills/engineering/mcp-builder/SKILL.md"
+      },
+      {
+        "id": "webapp-testing",
+        "desc": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.",
+        "path": ".claude/skills/engineering/webapp-testing/SKILL.md"
       }
     ],
     "devops": [
@@ -202,6 +207,28 @@
         "id": "skill-generator",
         "desc": "Transform extracted patterns into SKILL.md files following agentskills.io spec. Use when generating skills from patterns",
         "path": ".claude/skills/assimilation/skill-generator/SKILL.md"
+      }
+    ],
+    "vercel": [
+      {
+        "id": "web-design-guidelines",
+        "desc": "Review UI code for Web Interface Guidelines compliance. 100+ rules covering accessibility, focus states, forms, animation, typography, images, performance, navigation, dark mode, touch, i18n, and anti-patterns.",
+        "path": ".claude/skills/vercel/web-design-guidelines/SKILL.md"
+      },
+      {
+        "id": "react-best-practices",
+        "desc": "React and Next.js performance optimization guidelines from Vercel Engineering. 57 rules across 8 categories: waterfalls, bundle size, server-side, client-side, re-renders, rendering, JS perf, advanced patterns.",
+        "path": ".claude/skills/vercel/react-best-practices/SKILL.md"
+      },
+      {
+        "id": "composition-patterns",
+        "desc": "React composition patterns that scale. Compound components, state lifting, explicit variants, children over render props, and React 19 APIs. Use when refactoring boolean prop proliferation.",
+        "path": ".claude/skills/vercel/composition-patterns/SKILL.md"
+      },
+      {
+        "id": "react-native-skills",
+        "desc": "React Native and Expo best practices. FlashList, Reanimated animations, native navigators, expo-image, Pressable, monorepo patterns, and config plugins. Use when building mobile apps.",
+        "path": ".claude/skills/vercel/react-native-skills/SKILL.md"
       }
     ]
   }
