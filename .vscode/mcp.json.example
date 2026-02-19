@@ -1,0 +1,12 @@
+{
+  // Copy this file to mcp.json and uncomment the servers you need.
+  // See: https://code.visualstudio.com/docs/copilot/chat/mcp-servers
+  "servers": {
+    // Backlog MCP — task management via MCP tool calls
+    // Requires: npm install -g @backlog-md/mcp
+    // "backlog": {
+    //   "command": "npx",
+    //   "args": ["@backlog-md/mcp"]
+    // }
+  }
+}

@@ -33,4 +33,16 @@ else
   echo "Skipping Azure CLI (set INSTALL_AZURE_CLI=true to enable)"
 fi
 
+# Set up Python virtual environment with uv
+echo "Setting up Python environment with uv..."
+cd /workspaces/vibecoding-starter
+if [ ! -d ".venv" ]; then
+  uv venv
+  echo "✅ Created .venv"
+else
+  echo "✅ .venv already exists"
+fi
+uv sync
+echo "✅ Python dependencies synced"
+
 echo "postCreate done"

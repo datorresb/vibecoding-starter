@@ -27,6 +27,8 @@ This file contains **setup instructions** for configuring this project template.
 >
 > What will be installed:
 > - Agent skills for Claude Code and GitHub Copilot
+> - Custom agents for GitHub Copilot (`.github/agents/`)
+> - Reusable prompts (`.github/prompts/`)
 > - AGENTS.md workflow instructions
 > - Task management tools (optional)
 >
@@ -165,9 +167,18 @@ if [ ! -d "$INITIALIZER_DIR/.claude/skills" ]; then
 fi
 
 echo "✅ Skills source: $INITIALIZER_DIR/.claude/skills/"
+
+# Check for agents
+if [ -d "$INITIALIZER_DIR/.github/agents" ]; then
+  echo "✅ Agents source: $INITIALIZER_DIR/.github/agents/"
+else
+  echo "⚠️  No agents found in initializer"
+fi
 ```
 
 > **Tip:** Keeping the initializer in `.references/vibecoding-starter/` makes it available inside DevContainers while staying out of version control.
+
+> **Important:** The initializer contains not just skills but also agents (`.github/agents/`), prompts (`.github/prompts/`), and `copilot-instructions.md`. All are copied in Step 7.
 
 ---
 
@@ -201,6 +212,7 @@ fi
 - **Other / Not Sure** (will use `.claude/skills/`)
 
 > **Note:** All platforms use `.claude/skills/` as the standard location. GitHub Copilot can read from `.claude/` directories.
+> Agents (`.github/agents/`) and prompts (`.github/prompts/`) are GitHub Copilot features.
 
 **Record answer:** `[PLATFORM]`
 
@@ -448,12 +460,18 @@ if [ -d "$SKILLS_DIR" ]; then
 
   # Ask user for action
 fi
+
+# Check if agents directory exists
+if [ -d ".github/agents" ]; then
+  echo "⚠️  Existing agents directory found at: .github/agents/"
+  find .github/agents -name '*.agent.md' -printf '  %p\n'
+fi
 ```
 
 **Ask the user:**
 
-"Skills directory already exists. What would you like to do?"
-- **Merge** — Keep existing, add new from catalog (only copy non-existent skills)
+"Existing skills/agents found. What would you like to do?"
+- **Merge** — Keep existing, add new (only copy non-existent files)
 - **Replace** — Backup existing, install fresh
 - **Skip** — Keep existing, abort installation
 
@@ -514,6 +532,39 @@ if [ ! -f "./AGENTS.md" ]; then
   echo "✅ AGENTS.md copied"
 else
   echo "⚠️  AGENTS.md already exists, skipping"
+fi
+```
+
+### Copy Agents to Project
+
+```bash
+# Copy .github/agents/ (VS Code custom agents)
+if [ -d "$INITIALIZER_DIR/.github/agents" ]; then
+  mkdir -p .github/agents
+  cp -r "$INITIALIZER_DIR/.github/agents/"* .github/agents/
+  echo "✅ Agents copied to .github/agents/"
+else
+  echo "⚠️  No agents directory in initializer, skipping"
+fi
+
+# Copy .github/prompts/ (reusable prompt files)
+if [ -d "$INITIALIZER_DIR/.github/prompts" ]; then
+  mkdir -p .github/prompts
+  cp -r "$INITIALIZER_DIR/.github/prompts/"* .github/prompts/
+  echo "✅ Prompts copied to .github/prompts/"
+else
+  echo "⚠️  No prompts directory in initializer, skipping"
+fi
+
+# Copy .github/copilot-instructions.md
+if [ -f "$INITIALIZER_DIR/.github/copilot-instructions.md" ]; then
+  mkdir -p .github
+  if [ ! -f ".github/copilot-instructions.md" ]; then
+    cp "$INITIALIZER_DIR/.github/copilot-instructions.md" .github/copilot-instructions.md
+    echo "✅ copilot-instructions.md copied"
+  else
+    echo "⚠️  .github/copilot-instructions.md already exists, skipping"
+  fi
 fi
 ```
 
@@ -621,6 +672,61 @@ Scanning locations:
    skills-index.json 6.0KB (LLM-optimized)
 ────────────────────────────────────
 ```
+
+---
+
+## Step 8b: Python Environment Setup (uv)
+
+**Agent Instructions:** Ensure the Python virtual environment is configured with uv.
+
+> **Context:** This workspace uses `uv` as the sole Python environment manager. All Python work must happen inside `.venv/`.
+
+### Check uv availability
+
+```bash
+if command -v uv &>/dev/null; then
+  echo "✅ uv found: $(uv --version)"
+else
+  echo "❌ uv not found!"
+  echo "Install with: curl -LsSf https://astral.sh/uv/install.sh | sh"
+  echo "Or: pip install uv"
+fi
+```
+
+### Create and sync virtual environment
+
+```bash
+cd [project-root]
+
+# Create venv if missing
+if [ ! -d ".venv" ]; then
+  echo "Creating virtual environment..."
+  uv venv
+  echo "✅ .venv created"
+else
+  echo "✅ .venv already exists"
+fi
+
+# Sync dependencies from pyproject.toml
+if [ -f "pyproject.toml" ]; then
+  uv sync
+  echo "✅ Dependencies synced"
+fi
+```
+
+### Verify
+
+```bash
+# Activate and check
+source .venv/bin/activate
+python --version
+which python  # Should point to .venv/bin/python
+```
+
+**Important rules (also in AGENTS.md):**
+- Never use raw `pip install`, `conda`, `pyenv`, or `apt install python`
+- Install packages with `uv add <package>` (records in pyproject.toml) or `uv pip install <package>`
+- If `pyproject.toml` changes, run `uv sync`
 
 ---
 
@@ -746,8 +852,8 @@ bd list  # Should return empty list or existing issues
 **If git repository exists:**
 
 ```bash
-# Stage skills and AGENTS.md
-git add "$SKILLS_DIR" AGENTS.md .gitignore 2>/dev/null || true
+# Stage skills, agents, prompts, and AGENTS.md
+git add "$SKILLS_DIR" .github/agents .github/prompts .github/copilot-instructions.md AGENTS.md .gitignore 2>/dev/null || true
 
 # Check if there are changes to commit
 if ! git diff --cached --quiet; then
@@ -755,9 +861,11 @@ if ! git diff --cached --quiet; then
 
   git commit -m "Configure project with Vibecoding Starter
 
-Set up agent skills for AI coding assistants.
+Set up agent skills, custom agents, and prompts for AI coding assistants.
 
 Skills directory: $SKILLS_DIR
+Agents directory: .github/agents/
+Prompts directory: .github/prompts/
 Platform: $PLATFORM
 
 Skills configured:
@@ -789,23 +897,44 @@ fi
 echo "Checking skills..."
 ls -la "$SKILLS_DIR"
 
-# 2. Check bd working (if installed)
+# 2. Check agents installed
+echo "Checking agents..."
+if [ -d ".github/agents" ]; then
+  AGENT_COUNT=$(find .github/agents -name '*.agent.md' | wc -l)
+  echo "✅ $AGENT_COUNT agents found in .github/agents/"
+else
+  echo "❌ No agents directory found"
+fi
+
+# 3. Check prompts installed
+echo "Checking prompts..."
+if [ -d ".github/prompts" ]; then
+  PROMPT_COUNT=$(find .github/prompts -name '*.prompt.md' | wc -l)
+  echo "✅ $PROMPT_COUNT prompts found in .github/prompts/"
+else
+  echo "⚠️  No prompts directory found (optional)"
+fi
+
+# 4. Check copilot-instructions.md
+[ -f ".github/copilot-instructions.md" ] && echo "✅ copilot-instructions.md found" || echo "⚠️  copilot-instructions.md missing (optional)"
+
+# 5. Check bd working (if installed)
 if command -v bd &>/dev/null; then
   echo "Checking bd..."
   bd --version
 fi
 
-# 3. Check AGENTS.md exists
+# 6. Check AGENTS.md exists
 echo "Checking AGENTS.md..."
 [ -f "AGENTS.md" ] && echo "✅ AGENTS.md found" || echo "❌ AGENTS.md missing"
 
-# 4. Check git status
+# 7. Check git status
 if [ "$GIT_REPO" = "true" ]; then
   echo "Checking git..."
   git status
 fi
 
-# 5. Try creating a test task (if bd installed)
+# 8. Try creating a test task (if bd installed)
 if command -v bd &>/dev/null; then
   echo "Testing bd functionality..."
   bd create "Test task - setup verification" || true
@@ -816,6 +945,7 @@ fi
 **Success criteria:**
 
 - ✅ Skills directory exists with skills
+- ✅ Agents directory exists with `.agent.md` files
 - ✅ `AGENTS.md` exists
 - ✅ `bd` command works (if installed)
 - ✅ Platform-specific setup complete
@@ -975,9 +1105,18 @@ if [ -d ".claude/skills" ]; then
   echo "📦 Current skills backed up to: $BACKUP_DIR"
 fi
 
-# 3. Check for new/updated skills
+# Backup current agents
+if [ -d ".github/agents" ]; then
+  AGENTS_BACKUP=".github/agents-backup-$(date +%Y%m%d-%H%M%S)"
+  cp -r .github/agents "$AGENTS_BACKUP"
+  echo "📦 Current agents backed up to: $AGENTS_BACKUP"
+fi
+
+# 3. Check for new/updated skills and agents
 echo "🔍 Comparing skills..."
 diff -rq .claude/skills "$INITIALIZER_DIR/.claude/skills" 2>/dev/null || true
+echo "🔍 Comparing agents..."
+diff -rq .github/agents "$INITIALIZER_DIR/.github/agents" 2>/dev/null || true
 
 # 4. Ask user what to update
 echo ""
@@ -993,26 +1132,36 @@ echo "  • Selective - Choose specific skills to update"
 # Copy only new skills (won't overwrite existing)
 rsync -av --ignore-existing "$INITIALIZER_DIR/.claude/skills/" ".claude/skills/"
 
+# Copy only new agents (won't overwrite existing)
+rsync -av --ignore-existing "$INITIALIZER_DIR/.github/agents/" ".github/agents/"
+rsync -av --ignore-existing "$INITIALIZER_DIR/.github/prompts/" ".github/prompts/"
+
 # Regenerate registry
 cd .claude && node rebuild-registry.js && cd -
 
-echo "✅ New skills added. Your customizations preserved."
+echo "✅ New skills and agents added. Your customizations preserved."
 ```
 
 ### Full Replace:
 
 ```bash
-# Remove old skills (backup already created)
+# Remove old skills and agents (backups already created)
 rm -rf .claude/skills
+rm -rf .github/agents
+rm -rf .github/prompts
 
-# Copy all new skills
+# Copy all new skills, agents, and prompts
 cp -r "$INITIALIZER_DIR/.claude/skills" .claude/
+cp -r "$INITIALIZER_DIR/.github/agents" .github/
+cp -r "$INITIALIZER_DIR/.github/prompts" .github/
+cp "$INITIALIZER_DIR/.github/copilot-instructions.md" .github/
 
 # Regenerate registry  
 cd .claude && node rebuild-registry.js && cd -
 
-echo "✅ Skills fully updated to latest version."
+echo "✅ Skills and agents fully updated to latest version."
 echo "📦 Old skills backed up at: $BACKUP_DIR"
+echo "📦 Old agents backed up at: $AGENTS_BACKUP"
 ```
 
 ### Check for Updates Without Installing:

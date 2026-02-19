@@ -9,7 +9,9 @@
 !.claude/skills-index.json
 !.claude/skills.schema.json
 !.claude/skills-index.schema.json
-.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/mcp.json.example
 .windsurf/
 
 # Beads backlog system - local state only, not for version control
