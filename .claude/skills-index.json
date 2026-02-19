@@ -1,6 +1,6 @@
 {
   "v": "1.1.0",
-  "n": 42,
+  "n": 43,
   "skills": {
     "core": [
       {
@@ -224,6 +224,11 @@
         "id": "composition-patterns",
         "desc": "React composition patterns that scale. Compound components, state lifting, explicit variants, children over render props, and React 19 APIs. Use when refactoring boolean prop proliferation.",
         "path": ".claude/skills/vercel/composition-patterns/SKILL.md"
+      },
+      {
+        "id": "react-native-skills",
+        "desc": "React Native and Expo best practices. FlashList, Reanimated animations, native navigators, expo-image, Pressable, monorepo patterns, and config plugins. Use when building mobile apps.",
+        "path": ".claude/skills/vercel/react-native-skills/SKILL.md"
       }
     ]
   }
