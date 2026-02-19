@@ -45,12 +45,25 @@ fi
 uv sync
 echo "✅ Python dependencies synced"
 
-# Check for bd (beads) task management CLI
+# Check task management tools
+echo "Checking task management tools..."
+TASK_TOOL_FOUND=false
 if command -v bd &>/dev/null; then
-  echo "✅ bd $(bd --version 2>/dev/null || echo '') available"
-else
-  echo "ℹ️  bd (beads) not installed — task management via AGENT_START.md setup"
-  echo "   Install manually: curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash"
+  echo "✅ bd (beads) available: $(bd --version 2>/dev/null || echo 'unknown version')"
+  TASK_TOOL_FOUND=true
+fi
+if [ -f ".claude/mcp.json" ] && grep -q backlog .claude/mcp.json 2>/dev/null; then
+  echo "✅ Backlog MCP configured in .claude/mcp.json"
+  TASK_TOOL_FOUND=true
+elif [ -f ".vscode/mcp.json" ] && grep -q backlog .vscode/mcp.json 2>/dev/null; then
+  echo "✅ Backlog MCP configured in .vscode/mcp.json"
+  TASK_TOOL_FOUND=true
+fi
+if [ "$TASK_TOOL_FOUND" = false ]; then
+  echo "ℹ️  No task management tool detected (bd or Backlog MCP)"
+  echo "   Run AGENT_START.md Step 4 for guided setup, or install manually:"
+  echo "   • bd:          curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash"
+  echo "   • Backlog MCP: See .vscode/mcp.json.example"
 fi
 
 echo "postCreate done"

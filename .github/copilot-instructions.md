@@ -22,11 +22,12 @@ All Python work MUST use the workspace virtual environment (`.venv/`) managed by
 - Before running Python, ensure the venv is active: `source .venv/bin/activate`
 - When `pyproject.toml` changes, run `uv sync` to update the environment
 
-## Task Management: Check bd before using it
+## Task Management: Detect before using
 
-Before running ANY `bd` command (`bd create`, `bd list`, `bd sync`, etc.):
+This workspace supports **bd** (CLI) and/or **Backlog MCP** (MCP server). Neither is pre-installed.
 
-- First check: `command -v bd &>/dev/null`
-- If bd is NOT installed, inform the user and suggest installation
-- Never silently fail or skip task tracking — use `manage_todo_list` as fallback
-- bd is installed via AGENT_START.md, not automatically
+- Before using `bd`: check `command -v bd &>/dev/null`
+- Before using Backlog MCP: check for config in `.claude/mcp.json` or `.vscode/mcp.json`
+- If NEITHER is available: inform the user, suggest installation, use `manage_todo_list` as fallback
+- Never silently fail — always tell the user what's missing
+- Both tools are installed via AGENT_START.md Step 4 (user chooses which)

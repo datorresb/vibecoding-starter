@@ -340,37 +340,65 @@ uv sync
 
 ---
 
-## Task Management (bd / beads)
+## Task Management (bd or Backlog MCP)
 
-This workspace uses **[bd (beads)](https://github.com/steveyegge/beads)** as the primary task management CLI. bd is **optional** — it is installed via AGENT_START.md when the user chooses it.
+This workspace supports **two task management systems**. Neither is pre-installed — the user chooses during AGENT_START.md setup (Step 4).
 
-### Guard: Always Check Before Using
+| Tool | Type | How It Works | Best For |
+|------|------|-------------|----------|
+| **[bd (beads)](https://github.com/steveyegge/beads)** | CLI | Terminal commands (`bd create`, `bd list`) | GitHub Copilot, any editor |
+| **[Backlog MCP](https://www.npmjs.com/package/@backlog-md/mcp)** | MCP Server | MCP tool calls (`task_create`, `task_list`) | Claude Code, Gemini |
 
-Before running ANY `bd` command, you **MUST** check if it's available:
+### Guard: Always Detect Before Using
+
+Before attempting ANY task management operation, you **MUST** detect what's available:
 
 ```bash
-command -v bd &>/dev/null && echo "BD_AVAILABLE=true" || echo "BD_AVAILABLE=false"
+# Check bd (beads CLI)
+command -v bd &>/dev/null && echo "BD=true" || echo "BD=false"
+
+# Check Backlog MCP (look for config)
+[[ -f ".claude/mcp.json" ]] && grep -q backlog .claude/mcp.json 2>/dev/null && echo "BACKLOG_MCP=true" || echo "BACKLOG_MCP=false"
+
+# Check for backlog directory (used by either tool)
+[[ -d "backlog" ]] && echo "BACKLOG_DIR=true" || echo "BACKLOG_DIR=false"
 ```
 
-### If bd is NOT installed
+### Decision Tree
+
+| bd? | Backlog MCP? | What to do |
+|-----|-------------|------------|
+| ✅ | ✅ | Use bd (CLI works everywhere, MCP only in compatible clients) |
+| ✅ | ❌ | Use bd |
+| ❌ | ✅ | Use Backlog MCP tool calls |
+| ❌ | ❌ | **Fallback:** use `manage_todo_list` + inform user (see below) |
+
+### If NEITHER is installed
 
 **Do NOT silently fail.** Instead:
 
-1. **Inform the user:**
-   > ⚠️ `bd` (beads) is not installed. Task management commands (`bd create`, `bd list`, `bd sync`) are unavailable.
+1. **Inform the user once per session:**
+   > ⚠️ No task management tool detected (`bd` or Backlog MCP).
    >
-   > To install: `curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash`
-   > Or with Cargo: `cargo install beads-cli`
+   > **Option A — bd (recommended for Copilot):**
+   > ```
+   > curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
+   > bd init
+   > ```
    >
-   > After installing, run `bd init` in the project root.
+   > **Option B — Backlog MCP (for Claude Code):**
+   > Add to `.claude/mcp.json` or `.vscode/mcp.json`:
+   > ```json
+   > { "servers": { "backlog": { "command": "npx", "args": ["@backlog-md/mcp"] } } }
+   > ```
+   >
+   > Or run AGENT_START.md Step 4 for guided setup.
 
-2. **Continue without bd** — Use `manage_todo_list` for task tracking within the session. Skip `bd sync` in the landing-the-plane workflow.
+2. **Continue with `manage_todo_list`** — Use it as session-scoped fallback for task tracking.
 
-3. **Never block on bd** — A missing `bd` should never prevent work from being done.
+3. **Never block on missing tools** — Work must continue regardless.
 
-### If bd IS installed
-
-Use it normally per the `bd` skill. The standard commands are:
+### bd Quick Reference
 
 ```bash
 bd create "Task description"   # Create a task
@@ -378,6 +406,17 @@ bd list                         # List tasks
 bd close <id>                   # Close a task
 bd sync                         # Sync backlog state
 bd init                         # Initialize (first time only)
+```
+
+### Backlog MCP Quick Reference
+
+These work inside MCP-compatible clients only (Claude Code, VS Code with MCP):
+
+```
+task_create(title="Task description")   # Create a task
+task_list(status="To Do", limit=10)     # List tasks
+task_update(id="...", status="Done")    # Update task
+task_search(query="keyword")            # Search tasks
 ```
 
 ---
@@ -389,8 +428,8 @@ bd init                         # Initialize (first time only)
 1. **Check git status**: `git status` (any uncommitted changes?)
 2. **Sync with remote**: `git pull --rebase`
 3. **Ensure Python venv**: `[[ -d .venv ]] || uv venv && source .venv/bin/activate && uv sync`
-4. **Check bd availability**: `command -v bd &>/dev/null` (if missing, inform user — see Task Management section)
-5. **Review backlog**: Check for in-progress or ready tasks (use `bd list` if available, or check backlog/ directory)
+4. **Check task tools**: Detect bd and/or Backlog MCP availability (see Task Management section)
+5. **Review backlog**: Use `bd list`, `task_list()`, or check `backlog/` directory
 6. **Claim work**: Update task status to in_progress
 7. **Read context**: Review relevant documentation (AGENTS.md, README, etc.)
 
