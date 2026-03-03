@@ -152,7 +152,7 @@ task_list(status="To Do", limit=5)
 **If failed:**
 - Verify MCP server is configured correctly in `.claude/mcp.json`
 - Restart your MCP client
-- Check `npx @backlog-md/mcp --help` works from terminal
+- Check `npx -y backlog-mcp --help` works from terminal
 
 ---
 

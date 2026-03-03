@@ -347,7 +347,7 @@ This workspace supports **two task management systems**. Neither is pre-installe
 | Tool | Type | How It Works | Best For |
 |------|------|-------------|----------|
 | **[bd (beads)](https://github.com/steveyegge/beads)** | CLI | Terminal commands (`bd create`, `bd list`) | GitHub Copilot, any editor |
-| **[Backlog MCP](https://www.npmjs.com/package/@backlog-md/mcp)** | MCP Server | MCP tool calls (`task_create`, `task_list`) | Claude Code, Gemini |
+| **[Backlog MCP](https://www.npmjs.com/package/backlog-mcp)** | MCP Server | MCP tool calls (`task_create`, `task_list`) | Claude Code, Gemini |
 
 ### Guard: Always Detect Before Using
 
@@ -389,7 +389,7 @@ command -v bd &>/dev/null && echo "BD=true" || echo "BD=false"
    > **Option B — Backlog MCP (for Claude Code):**
    > Add to `.claude/mcp.json` or `.vscode/mcp.json`:
    > ```json
-   > { "servers": { "backlog": { "command": "npx", "args": ["@backlog-md/mcp"] } } }
+   > { "servers": { "backlog": { "command": "npx", "args": ["-y", "backlog-mcp"] } } }
    > ```
    >
    > Or run AGENT_START.md Step 4 for guided setup.
@@ -417,6 +417,18 @@ task_create(title="Task description")   # Create a task
 task_list(status="To Do", limit=10)     # List tasks
 task_update(id="...", status="Done")    # Update task
 task_search(query="keyword")            # Search tasks
+```
+
+**Runtime healthcheck (terminal):**
+
+```bash
+backlog-mcp status || npx -y backlog-mcp status
+```
+
+If status reports "Server is not running", start it with:
+
+```bash
+backlog-mcp || npx -y backlog-mcp
 ```
 
 ---

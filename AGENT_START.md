@@ -378,7 +378,7 @@ source ~/.bashrc  # or ~/.zshrc
 1. **Install the Backlog MCP server** (follow the Backlog.md project instructions):
    ```bash
    # Check if npx is available
-   npx @backlog-md/mcp --help 2>/dev/null || echo "Install via: npm install -g @backlog-md/mcp"
+  npx -y backlog-mcp --help 2>/dev/null || echo "Install via: npm install -g backlog-mcp"
    ```
 
 2. **Configure MCP in your client:**
@@ -389,7 +389,7 @@ source ~/.bashrc  # or ~/.zshrc
      "mcpServers": {
        "backlog": {
          "command": "npx",
-         "args": ["@backlog-md/mcp"]
+         "args": ["-y", "backlog-mcp"]
        }
      }
    }

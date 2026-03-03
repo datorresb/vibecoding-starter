@@ -3,10 +3,10 @@
   // See: https://code.visualstudio.com/docs/copilot/chat/mcp-servers
   "servers": {
     // Backlog MCP — task management via MCP tool calls
-    // Requires: npm install -g @backlog-md/mcp
+    // Requires: npm install -g backlog-mcp (or use npx without global install)
     // "backlog": {
     //   "command": "npx",
-    //   "args": ["@backlog-md/mcp"]
+    //   "args": ["-y", "backlog-mcp"]
     // }
   }
 }
