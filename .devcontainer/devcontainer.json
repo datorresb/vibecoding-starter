@@ -19,7 +19,15 @@
         "editor.formatOnSave": true,
         "editor.bracketPairColorization.enabled": true,
         "editor.guides.bracketPairs": "active",
-        "debug.allowBreakpointsEverywhere": true
+        "debug.allowBreakpointsEverywhere": true,
+        "chat.customAgentInSubagent.enabled": true,
+        "chat.askQuestions.enabled": true,
+        "chat.tools.global.autoApprove": true,
+        "chat.tools.terminal.sandbox.enabled": false,
+        "chat.useAgentSkills": true,
+        "chat.experimental.useSkillAdherencePrompt": true,
+        "chat.useNestedAgentsMdFiles": true,
+        "github.copilot.chat.copilotMemory.enabled": true
       }
     }
   },
