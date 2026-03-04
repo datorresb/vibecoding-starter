@@ -1,6 +1,6 @@
 {
   "v": "1.1.0",
-  "n": 43,
+  "n": 45,
   "skills": {
     "core": [
       {
@@ -124,6 +124,16 @@
         "id": "webapp-testing",
         "desc": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.",
         "path": ".claude/skills/engineering/webapp-testing/SKILL.md"
+      },
+      {
+        "id": "root-cause-design",
+        "desc": "Trace data flow and find root cause BEFORE writing code. Use when: adding a field to output, enriching a result, passing a parameter through multiple functions, modifying function signatures, fixing 'data not available' issues, parameter threading, band-aid pattern, enrich output, add field, data flow analysis, where does data belong.",
+        "path": ".claude/skills/engineering/root-cause-design/SKILL.md"
+      },
+      {
+        "id": "cross-cutting-feature",
+        "desc": "Step-by-step procedure for implementing features that cross multiple layers: models, functions, adapters, agent state, tools, config, and tests. Use when: adding a new constraint type, adding a new tool to an agent, new optimization feature, new agent capability, feature touches multiple files, implement constraint, add tool, agent feature, multi-layer change, end-to-end feature.",
+        "path": ".claude/skills/engineering/cross-cutting-feature/SKILL.md"
       }
     ],
     "devops": [
